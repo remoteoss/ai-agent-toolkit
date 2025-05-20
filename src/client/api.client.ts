@@ -6,11 +6,19 @@ import type {
   ListEmploymentsParams,
   ListEmploymentsResponse,
 } from './employments.types';
+import type {
+  ListPayrollRunsParams,
+  ListPayrollRunsResponse,
+  ShowPayrollRunParams,
+  ShowPayrollRunResponse,
+} from './payroll.types';
 
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
   listEmployments(params: ListEmploymentsParams): Promise<ListEmploymentsResponse>;
+  listPayrollRuns(params: ListPayrollRunsParams): Promise<ListPayrollRunsResponse>;
+  showPayrollRun(params: ShowPayrollRunParams): Promise<ShowPayrollRunResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -72,7 +80,7 @@ export class RemoteApiClient implements ApiClient {
       if (response.status === 204) {
         return undefined as T;
       }
-      
+
       return response.json() as Promise<T>;
     } catch (error) {
       console.error(`API Request Failed for ${method} ${url.toString()}:`, error);
@@ -90,4 +98,13 @@ export class RemoteApiClient implements ApiClient {
   async listEmployments(params: ListEmploymentsParams): Promise<ListEmploymentsResponse> {
     return this.request<ListEmploymentsResponse>('/employments', 'GET', params as Record<string, string | number | boolean | undefined>);
   }
-} 
+
+  async listPayrollRuns(params: ListPayrollRunsParams): Promise<ListPayrollRunsResponse> {
+    return this.request<ListPayrollRunsResponse>('/payroll-runs', 'GET', params as Record<string, string | number | boolean | undefined>);
+  }
+
+  async showPayrollRun(params: ShowPayrollRunParams): Promise<ShowPayrollRunResponse> {
+    const { payroll_run_id } = params;
+    return this.request<ShowPayrollRunResponse>(`/payroll-runs/${payroll_run_id}`, 'GET');
+  }
+}
