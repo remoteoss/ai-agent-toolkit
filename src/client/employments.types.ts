@@ -1,7 +1,6 @@
 export interface ListEmploymentsParams {
   page?: number;
   page_size?: number;
-  
 }
 
 export interface Employment {
@@ -24,4 +23,4 @@ export interface ListEmploymentsResponse {
   employments: Employment[];
   total_count: number;
   total_pages: number;
-} 
+}
