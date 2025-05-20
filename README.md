@@ -9,6 +9,28 @@ This project is a TypeScript-based toolkit designed to integrate with a generic 
 - **MCP Server**: Runs an MCP server that exposes the tools, allowing integration with MCP-compatible clients like Claude Desktop.
 - **Extensible**: Designed to easily add more tools for other Remote API endpoints.
 
+## Roadmap / Future Development
+
+Here are some potential next steps and areas for future development:
+
+- **Add More Tools:**
+  - Create Time Off
+  - Delete Time Off
+  - Approve Time Off
+  - List Payroll Runs
+  - _(Add other desired API functionalities as tools)_
+- **Enhance Hackathon Demos:**
+  - Create/improve LangChain tool usage examples for demonstration.
+  - Create/improve MCP server usage examples for demonstration.
+- **Implement Testing:**
+  - Add unit tests for API client methods and tool execution logic.
+  - Add integration tests for LangChain toolkit and MCP server functionality.
+- **NPM Package Release:**
+  - Refine the build process.
+  - Update `package.json` for publishing (main, types, files, repository, author, license, keywords).
+  - Add TSDoc comments and generate API documentation.
+  - Publish to NPM.
+
 ## Prerequisites
 
 - Node.js (v18 or higher recommended)
