@@ -1,6 +1,6 @@
 # Remote API Agent Toolkit
 
-This project is a TypeScript-based toolkit designed to integrate with the [Remote API][https://developer.remote.com]. It provides ready-to-use tools for [LangChain](https://js.langchain.com/) agents and an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, allowing language models to interact with the Remote API's functionalities, such as listing time off requests.
+This project is a TypeScript-based toolkit designed to integrate with the [Remote API](https://developer.remote.com). It provides ready-to-use tools for [LangChain](https://js.langchain.com/) agents and an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, allowing language models to interact with the Remote API's functionalities, such as listing time off requests.
 
 ## Features
 
