@@ -9,7 +9,6 @@ node_modules/
 # Build output
 dist/
 build/
-package-lock.json
 
 # Logs
 logs
