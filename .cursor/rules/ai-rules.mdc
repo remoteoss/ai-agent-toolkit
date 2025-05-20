@@ -1,0 +1,22 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## Code examples
+The first endpoint implemented by hand is `listTimeoff`
+You can find the reference implementation in these files: 
+- [listTimeOff.ts](mdc:src/tools/listTimeOff.ts)
+- [timeoff.types.ts](mdc:src/client/timeoff.types.ts)
+
+## Development 
+This project is building an MCP server to be used with Remote API.
+Use [openapi.json](mdc:openapi.json) as reference for the API endpoints, you can ignore webhooks, but be very accurate when listing out the parameters needed for an API call.
+When implementing a new endpoint, it should be added under the src/tools folder, and its factory should be added to `toolFactories` in [index.ts](mdc:src/tools/index.ts).
+[timeoff.types.ts](mdc:src/client/timeoff.types.ts) is a reference for how to specify types to be used in the API.
+You can also write tests/examples, such as [test-list-timeoff-tool.ts](mdc:src/examples/test-list-timeoff-tool.ts) and [test-mcp-server.ts](mdc:src/examples/test-mcp-server.ts). The example should focus on showing the functionality/integration with an LLM provider rather than being a test.
+When creating a new tool, you might need to add more in the mix, for example to create a time off you would also have to fetch the list of applicable approvers.
+
+### Key Principles:
+- Write clean code, respecting Typescript best practices
+- Pay attention to variable names, don't make assumptions and typos

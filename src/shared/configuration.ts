@@ -3,6 +3,6 @@
  * This can be expanded to include API keys, configurations, etc.
  */
 export interface Context {
-  apiKey?: string; 
-  [key: string]: any; 
+  apiKey?: string;
+  [key: string]: any;
 }
