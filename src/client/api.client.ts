@@ -2,10 +2,15 @@ import type {
   ListTimeOffParams,
   ListTimeOffResponse,
 } from './timeoff.types';
+import type {
+  ListEmploymentsParams,
+  ListEmploymentsResponse,
+} from './employments.types';
 
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
+  listEmployments(params: ListEmploymentsParams): Promise<ListEmploymentsResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -80,5 +85,9 @@ export class RemoteApiClient implements ApiClient {
 
   async listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse> {
     return this.request<ListTimeOffResponse>('/timeoff', 'GET', params as Record<string, string | number | boolean | undefined>);
+  }
+
+  async listEmployments(params: ListEmploymentsParams): Promise<ListEmploymentsResponse> {
+    return this.request<ListEmploymentsResponse>('/employments', 'GET', params as Record<string, string | number | boolean | undefined>);
   }
 } 

@@ -1,9 +1,11 @@
 import listTimeOffToolFactory from './listTimeOff';
+import listEmploymentsToolFactory from './listEmployments';
 import type { ToolListFactory, ToolFactory } from '../shared/tools';
 import type { Context } from '../shared/configuration';
 
 const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
+  listEmploymentsToolFactory,
   // Add other tool factories here as they are created
   // e.g., createTimeOffToolFactory,
 ];
