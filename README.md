@@ -166,17 +166,16 @@ To use this MCP server with Claude Desktop, you'll need to edit your `claude_des
     ```json
     {
       "mcpServers": {
-        "RemoteAPIToolkit": {
-          // You can name this whatever you like
-          "command": "/Users/<your_username>/Projects/<your_project_directory_name>/node_modules/.bin/ts-node",
+        "RemoteAIToolkit": {
+          "command": "/Users/jeroen.vandergeer/.asdf/installs/nodejs/23.11.0/bin/node",
           "args": [
-            "/Users/<your_username>/Projects/<your_project_directory_name>/src/mcp/cli.ts"
+            "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts/node_modules/ts-node/dist/bin.js",
+            "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts/src/mcp/cli.ts"
           ],
           "env": {
-            "REMOTE_API_KEY": "your_actual_remote_api_key_from_env_or_direct",
-            "PATH": "/Users/<your_username>/.asdf/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" // Adjust if you use nvm or have node elsewhere; ensure your asdf/nvm shims or node bin path is first
+            "REMOTE_API_KEY": "PUT_SANDBOX_KEY_HERE"
           },
-          "workingDirectory": "/Users/<your_username>/Projects/<your_project_directory_name>"
+          "workingDirectory": "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts"
         }
       }
     }
