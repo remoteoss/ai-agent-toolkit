@@ -42,7 +42,7 @@ Here are some potential next steps and areas for future development:
 
     ```bash
     git clone <your-repository-url>
-    cd remote-ai-agent-toolkit-ts
+    cd remote-api-agent-toolkit-ts
     ```
 
 2.  **Install dependencies:**
@@ -169,13 +169,13 @@ To use this MCP server with Claude Desktop, you'll need to edit your `claude_des
         "RemoteAIToolkit": {
           "command": "/Users/jeroen.vandergeer/.asdf/installs/nodejs/23.11.0/bin/node",
           "args": [
-            "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts/node_modules/ts-node/dist/bin.js",
-            "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts/src/mcp/cli.ts"
+            "/Users/jeroen.vandergeer/Projects/remote-api-agent-toolkit-ts/node_modules/ts-node/dist/bin.js",
+            "/Users/jeroen.vandergeer/Projects/remote-api-agent-toolkit-ts/src/mcp/cli.ts"
           ],
           "env": {
             "REMOTE_API_KEY": "PUT_SANDBOX_KEY_HERE"
           },
-          "workingDirectory": "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts"
+          "workingDirectory": "/Users/jeroen.vandergeer/Projects/remote-api-agent-toolkit-ts"
         }
       }
     }

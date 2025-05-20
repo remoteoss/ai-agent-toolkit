@@ -1,7 +1,7 @@
 {
   "name": "remote-api-agent-toolkit",
   "version": "0.1.0",
-  "description": "Toolkit for integrating a remote API into agentic workflows",
+  "description": "Toolkit for integrating the Remote API into agentic workflows",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
