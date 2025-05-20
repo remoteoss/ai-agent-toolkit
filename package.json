@@ -1,5 +1,5 @@
 {
-  "name": "remote-ai-agent-toolkit-ts",
+  "name": "remote-api-agent-toolkit",
   "version": "0.1.0",
   "description": "Toolkit for integrating a remote API into agentic workflows",
   "main": "dist/index.js",
