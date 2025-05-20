@@ -6,7 +6,6 @@ import cancelTimeOffToolFactory from "./cancelTimeOff";
 import createTimeOffToolFactory from "./createTimeOff";
 import declineCancelRequestToolFactory from "./declineCancelRequest";
 import declineTimeOffToolFactory from "./declineTimeOff";
-import deleteTimeOffToolFactory from "./deleteTimeOff";
 import getTimeOffToolFactory from "./getTimeOff";
 import getTimeOffBalanceToolFactory from "./getTimeOffBalance";
 import listCompanyManagersToolFactory from "./listCompanyManagers";
@@ -24,7 +23,6 @@ const toolFactories: ToolFactory[] = [
   listCompanyManagersToolFactory,
   updateTimeOffToolFactory,
   getTimeOffToolFactory,
-  deleteTimeOffToolFactory,
   approveTimeOffToolFactory,
   cancelTimeOffToolFactory,
   declineTimeOffToolFactory,

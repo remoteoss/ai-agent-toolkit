@@ -14,7 +14,6 @@ import type {
 } from "./payroll.types";
 import type {
   CreateTimeOffResponse,
-  DeleteTimeOffResponse,
   GetTimeOffResponse,
   ListTimeOffParams,
   ListTimeOffResponse,
@@ -34,7 +33,6 @@ export interface ApiClient {
   createTimeOff(params: TimeOffParams): Promise<CreateTimeOffResponse>;
   updateTimeOff(params: TimeOffParams): Promise<UpdateTimeOffResponse>;
   getTimeOff(id: string): Promise<GetTimeOffResponse>;
-  deleteTimeOff(id: string): Promise<DeleteTimeOffResponse>;
   approveTimeOff(id: string): Promise<TimeOffActionResponse>;
   cancelTimeOff(
     id: string,
@@ -164,10 +162,6 @@ export class RemoteApiClient implements ApiClient {
 
   async getTimeOff(id: string): Promise<GetTimeOffResponse> {
     return this.request<GetTimeOffResponse>(`/timeoff/${id}`, "GET");
-  }
-
-  async deleteTimeOff(id: string): Promise<DeleteTimeOffResponse> {
-    return this.request<DeleteTimeOffResponse>(`/timeoff/${id}`, "DELETE");
   }
 
   async approveTimeOff(id: string): Promise<TimeOffActionResponse> {

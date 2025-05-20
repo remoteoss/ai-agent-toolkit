@@ -108,11 +108,6 @@ export interface GetTimeOffResponse {
   timeoff: TimeOffEntry;
 }
 
-export interface DeleteTimeOffResponse {
-  success: boolean;
-  message?: string;
-}
-
 export interface TimeOffActionResponse {
   success: boolean;
   message?: string;
