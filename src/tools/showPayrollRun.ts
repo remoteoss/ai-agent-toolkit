@@ -20,7 +20,7 @@ export const showPayrollRunParameters = (
 export const showPayrollRun = async (
   apiClient: ApiClient,
   _context: Context,
-  params: { [x: string]: any }
+  params: { [x: string]: any; }
 ): Promise<ShowPayrollRunResponse | string> => {
   try {
     const payrollRun = await apiClient.showPayrollRun(params as ShowPayrollRunParams);

@@ -1,13 +1,7 @@
 import { z } from 'zod';
 
-// Params for listing payroll runs
-export const ListPayrollRunsParamsSchema = z.object({
-  page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
-  page_size: z.number().int().min(1).max(100).optional().describe('Number of items per page (1-100).'),
-});
-
-export type ListPayrollRunsParams = z.infer<typeof ListPayrollRunsParamsSchema>;
-
+// This is incomplete, built with Cursor checking our docs.
+// TODO: Complete the types
 export interface PayrollRun {
   id: string;
   status: string;
@@ -16,19 +10,18 @@ export interface PayrollRun {
   processed_at?: string;
 }
 
-export interface ListPayrollRunsResponse {
-  payroll_runs: PayrollRun[];
-  page: number;
-  page_size: number;
-  total_count: number;
+export interface ListPayrollRunsParams {
+  payroll_period?: string;
+  page?: number;
+  page_size?: number;
 }
 
-// Params for showing a single payroll run
-export const ShowPayrollRunParamsSchema = z.object({
-  payroll_run_id: z.string().describe('The ID of the payroll run to fetch.'),
-});
+export interface ListPayrollRunsResponse {
+  payroll_runs: PayrollRun[];
+}
 
-export type ShowPayrollRunParams = z.infer<typeof ShowPayrollRunParamsSchema>;
+export interface ShowPayrollRunParams {
+  payroll_run_id: string;
+}
 
-// Response for showing a single payroll run
 export type ShowPayrollRunResponse = PayrollRun;

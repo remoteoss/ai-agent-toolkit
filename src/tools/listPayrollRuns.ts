@@ -12,10 +12,12 @@ It supports pagination.
 export const listPayrollRunsParameters = (
   _context?: Context
 ): z.ZodObject<{
+  payroll_period: z.ZodOptional<z.ZodString>;
   page: z.ZodOptional<z.ZodNumber>;
   page_size: z.ZodOptional<z.ZodNumber>;
 }> =>
   z.object({
+    payroll_period: z.string().optional().describe('The payroll period to fetch.'),
     page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z.number().int().min(1).max(100).optional().describe('Number of items per page (1-100).'),
   });
