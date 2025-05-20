@@ -1,93 +1,202 @@
-# Remote AI Agent Toolkit
+# Remote API Agent Toolkit (TypeScript)
 
+This project is a TypeScript-based toolkit designed to integrate with a generic "Remote API". It provides ready-to-use tools for [LangChain](https://js.langchain.com/) agents and an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, allowing language models to interact with the Remote API's functionalities, such as listing time off requests.
 
+## Features
 
-## Getting started
+- **API Client**: A typed client for interacting with the Remote API (initially targeting time off endpoints).
+- **LangChain Tools**: Exposes Remote API functionalities as LangChain `StructuredTool` instances, compatible with agents.
+- **MCP Server**: Runs an MCP server that exposes the tools, allowing integration with MCP-compatible clients like Claude Desktop.
+- **Extensible**: Designed to easily add more tools for other Remote API endpoints.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Node.js (v18 or higher recommended)
+- npm or yarn
 
-## Add your files
+## Setup
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+1.  **Clone the repository:**
 
+    ```bash
+    git clone <your-repository-url>
+    cd remote-ai-agent-toolkit-ts
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root of the project and add your API keys:
+    ```env
+    REMOTE_API_KEY=your_remote_api_key_here
+    OPENAI_API_KEY=your_openai_api_key_here # Required for LangChain example
+    ```
+    - `REMOTE_API_KEY`: Your API key for the Remote API.
+    - `OPENAI_API_KEY`: Your OpenAI API key, needed to run the LangChain agent example.
+
+## LangChain Toolkit Integration
+
+The toolkit provides `RemoteApiAgentToolkit` for easy integration with LangChain agents.
+
+**Example Usage (`src/examples/test-list-timeoff-tool.ts`):**
+
+```typescript
+import { RemoteApiAgentToolkit } from "../langchain/toolkit";
+import { ChatOpenAI } from "@langchain/openai";
+import type { ChatPromptTemplate } from "@langchain/core/prompts";
+import { pull } from "langchain/hub";
+import { AgentExecutor, createStructuredChatAgent } from "langchain/agents";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+async function main() {
+  const llm = new ChatOpenAI({
+    model: "gpt-4o", // Or your preferred model
+    temperature: 0,
+  });
+
+  const remoteApiKey = process.env.REMOTE_API_KEY;
+  if (!remoteApiKey) {
+    console.error("REMOTE_API_KEY is not set.");
+    process.exit(1);
+  }
+  const remoteApiToolkit = new RemoteApiAgentToolkit({ apiKey: remoteApiKey });
+
+  const tools = remoteApiToolkit.getTools();
+  console.log(
+    "Tools available to the agent:",
+    tools.map((t) => t.name)
+  );
+
+  const prompt = await pull<ChatPromptTemplate>(
+    "hwchase17/structured-chat-agent"
+  );
+
+  const agent = await createStructuredChatAgent({
+    llm,
+    tools,
+    prompt,
+  });
+
+  const agentExecutor = new AgentExecutor({
+    agent,
+    tools,
+    verbose: true,
+  });
+
+  const input =
+    "Can you list the first 2 approved time off requests for employment ID emp_123?";
+  const response = await agentExecutor.invoke({
+    input: input,
+  });
+
+  console.log(JSON.stringify(response, null, 2));
+}
+
+main().catch(console.error);
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/remote-com/remote-ai-agent-toolkit.git
-git branch -M main
-git push -uf origin main
+
+**To run this example:**
+Ensure your `.env` file has `REMOTE_API_KEY` and `OPENAI_API_KEY`.
+
+```bash
+npm install -D ts-node # if not already installed
+npx ts-node src/examples/test-list-timeoff-tool.ts
 ```
 
-## Integrate with your tools
+## MCP Server
 
-- [ ] [Set up project integrations](https://gitlab.com/remote-com/remote-ai-agent-toolkit/-/settings/integrations)
+The MCP server exposes the toolkit's functionalities to MCP clients like Claude Desktop.
 
-## Collaborate with your team
+**Running the MCP Server:**
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+Ensure your `.env` file has `REMOTE_API_KEY` or provide it as a command-line argument.
 
-## Test and Deploy
+```bash
+# Using environment variable from .env
+npm run start:mcp
+# or
+yarn start:mcp
 
-Use the built-in continuous integration in GitLab.
+# Explicitly passing API key (if not in .env)
+# ts-node src/mcp/cli.ts --api-key=your_remote_api_key_here
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+**Configuring with Claude Desktop:**
 
-***
+To use this MCP server with Claude Desktop, you'll need to edit your `claude_desktop_config.json` file.
 
-# Editing this README
+1.  **Locate/Create `claude_desktop_config.json`:**
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+    - **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+    - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
-## Suggestions for a good README
+2.  **Add the server configuration:**
+    Replace `<your_username>` and `<your_project_directory_name>` with your actual details.
+    The example assumes your project is at `/Users/<your_username>/Projects/<your_project_directory_name>`.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+    ```json
+    {
+      "mcpServers": {
+        "RemoteAPIToolkit": {
+          // You can name this whatever you like
+          "command": "/Users/<your_username>/Projects/<your_project_directory_name>/node_modules/.bin/ts-node",
+          "args": [
+            "/Users/<your_username>/Projects/<your_project_directory_name>/src/mcp/cli.ts"
+          ],
+          "env": {
+            "REMOTE_API_KEY": "your_actual_remote_api_key_from_env_or_direct",
+            "PATH": "/Users/<your_username>/.asdf/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" // Adjust if you use nvm or have node elsewhere; ensure your asdf/nvm shims or node bin path is first
+          },
+          "workingDirectory": "/Users/<your_username>/Projects/<your_project_directory_name>"
+        }
+      }
+    }
+    ```
 
-## Name
-Choose a self-explaining name for your project.
+    **Important Notes for Claude Desktop Config:**
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+    - **`command`**: This points to your locally installed `ts-node`. If `ts-node` is global and in Claude's PATH, you might simplify it. If you use `asdf` or `nvm`, the direct path to the `node` executable provided by them is most robust, see next point.
+    - **`PATH` in `env`**: The provided `PATH` example includes a common location for `asdf` shims. **Adjust this PATH to ensure the `node` executable (used by `ts-node`) can be found.** If you use `nvm`, the path would look different. You can find your node path by running `which node` in your configured terminal. The specific path to the node executable can also be used as the `"command"`, with `ts-node`'s `bin.js` script as the first argument (see previous conversation history for this alternative).
+    - **`REMOTE_API_KEY`**: Ensure this is set to your actual key.
+    - **`workingDirectory`**: Set to the root of this project.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+3.  **Restart Claude Desktop** after saving the configuration.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+**Testing the MCP Server (Standalone Client):**
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+You can also test the MCP server with the example client script:
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```bash
+npx ts-node src/examples/test-mcp-server.ts
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+This script requires `REMOTE_API_KEY` to be set in your `.env` file.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## Development
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+- **Adding New Tools**:
+  1.  Define new request/response types in `src/client/timeoff.types.ts` (or a new types file).
+  2.  Add the corresponding method to `ApiClient` and `RemoteApiClient` in `src/client/api.client.ts`.
+  3.  Create a new tool file (e.g., `src/tools/yourNewTool.ts`) similar to `listTimeOff.ts`, defining the prompt, Zod parameters, and execution logic.
+  4.  Add the new tool factory to `src/tools/index.ts`.
+- **Building for Production (Optional for publishing):**
+  ```bash
+  npm run build
+  ```
+  This will compile TypeScript to JavaScript in the `dist` folder.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Project Structure
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- `src/client/`: API client and type definitions for API interaction.
+- `src/langchain/`: LangChain specific wrappers and toolkit.
+- `src/mcp/`: MCP server implementation and CLI.
+- `src/shared/`: Shared types and configurations (Context, Tool definition).
+- `src/tools/`: Individual tool definitions and factory aggregation.
+- `src/examples/`: Example scripts for testing.

@@ -1,0 +1,36 @@
+{
+  "name": "remote-ai-agent-toolkit-ts",
+  "version": "0.1.0",
+  "description": "Toolkit for integrating a remote API into agentic workflows",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "start:mcp": "ts-node src/mcp/cli.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "langchain",
+    "mcp",
+    "ai-agents",
+    "toolkit"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.56",
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "langchain": "^0.3.26",
+    "zod": "^3.25.7"
+  }
+}
