@@ -5,6 +5,8 @@ import type {
 import type {
   ListEmploymentsParams,
   ListEmploymentsResponse,
+  ShowEmploymentParams,
+  ShowEmploymentResponse,
 } from "./employments.types";
 import type {
   ListPayrollRunsParams,
@@ -50,6 +52,7 @@ export interface ApiClient {
   listEmployments(
     params: ListEmploymentsParams,
   ): Promise<ListEmploymentsResponse>;
+  showEmployment(params: ShowEmploymentParams): Promise<ShowEmploymentResponse>;
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
   createTimeOff(params: TimeOffParams): Promise<CreateTimeOffResponse>;
   updateTimeOff(params: TimeOffParams): Promise<UpdateTimeOffResponse>;
@@ -284,6 +287,17 @@ export class RemoteApiClient implements ApiClient {
       params as Record<string, string | number | boolean | undefined>,
     );
   }
+
+  async showEmployment(
+    params: ShowEmploymentParams,
+  ): Promise<ShowEmploymentResponse> {
+    const { employment_id } = params;
+    return this.request<ShowEmploymentResponse>(
+      `/employments/${employment_id}`,
+      "GET",
+    );
+  }
+
   async listPayrollRuns(
     params: ListPayrollRunsParams,
   ): Promise<ListPayrollRunsResponse> {

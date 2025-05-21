@@ -49,3 +49,11 @@ export interface ListEmploymentsResponse {
   total_count: number;
   total_pages: number;
 }
+
+export interface ShowEmploymentParams {
+  employment_id: string;
+}
+
+export interface ShowEmploymentResponse extends Employment {
+  // Note: The response will include all Employment fields plus additional country-specific data
+}

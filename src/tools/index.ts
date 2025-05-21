@@ -12,6 +12,7 @@ import listEmploymentsToolFactory from "./listEmployments";
 import listPayrollRunsToolFactory from "./listPayrollRuns";
 import listTimeOffToolFactory from "./listTimeOff";
 import listTimeOffTypesToolFactory from "./listTimeOffTypes";
+import showEmploymentToolFactory from "./showEmployment";
 import showPayrollRunToolFactory from "./showPayrollRun";
 import updateTimeOffToolFactory from "./updateTimeOff";
 import leaveBalanceToolFactory from "./leaveBalance";
@@ -28,6 +29,7 @@ import sendBackTimesheetToolFactory from "./sendBackTimesheet";
 const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
   listEmploymentsToolFactory,
+  showEmploymentToolFactory,
   createTimeOffToolFactory,
   listCompanyManagersToolFactory,
   updateTimeOffToolFactory,
