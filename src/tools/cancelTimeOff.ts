@@ -10,7 +10,7 @@ This tool cancels a Time Off request by its ID in the Remote API.
 
 export const cancelTimeOffParameters = (_context?: Context) =>
   z.object({
-    id: z.string().describe("The ID of the time off to cancel."),
+    id: z.string().describe("The UUID of the time off to cancel. Use list_time_off to get the UUID."),
     cancel_reason: z
       .string()
       .describe("The reason for cancelling the time off."),

@@ -27,7 +27,7 @@ export const listTimeOffParameters = (
     employment_id: z
       .string()
       .optional()
-      .describe("Filter time off for a specific employment ID."),
+      .describe("Filter time off for a specific employment ID. Must be a valid employment ID from the list_employments tool, in UUID format."),
     timeoff_type: z
       .string()
       .optional()

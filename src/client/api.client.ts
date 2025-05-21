@@ -19,7 +19,8 @@ import type {
   ListTimeOffResponse,
   ListTimeOffTypesResponse,
   TimeOffActionResponse,
-  TimeOffBalanceResponse,
+  ListLeavePoliciesSummaryResponse,
+  ListLeavePoliciesDetailsResponse,
   TimeOffParams,
   UpdateTimeOffResponse,
 } from "./timeoff.types";
@@ -42,7 +43,12 @@ export interface ApiClient {
   approveCancelRequest(id: string): Promise<TimeOffActionResponse>;
   declineCancelRequest(id: string): Promise<TimeOffActionResponse>;
   listTimeOffTypes(): Promise<ListTimeOffTypesResponse>;
-  getTimeOffBalance(employment_id: string): Promise<TimeOffBalanceResponse>;
+  getLeavePoliciesSummary(
+    employment_id: string,
+  ): Promise<ListLeavePoliciesSummaryResponse>;
+  getLeavePoliciesDetails(
+    employment_id: string,
+  ): Promise<ListLeavePoliciesDetailsResponse>;
   listCompanyManagers(
     params: ListCompanyManagersParams,
   ): Promise<ListCompanyManagersResponse>;
@@ -206,14 +212,23 @@ export class RemoteApiClient implements ApiClient {
   }
 
   async listTimeOffTypes(): Promise<ListTimeOffTypesResponse> {
-    return this.request<ListTimeOffTypesResponse>(`/timeoff-types`, "GET");
+    return this.request<ListTimeOffTypesResponse>(`/timeoff/types`, "GET");
   }
 
-  async getTimeOffBalance(
+  async getLeavePoliciesSummary(
     employment_id: string,
-  ): Promise<TimeOffBalanceResponse> {
-    return this.request<TimeOffBalanceResponse>(
-      `/timeoff-balances/${employment_id}`,
+  ): Promise<ListLeavePoliciesSummaryResponse> {
+    return this.request<ListLeavePoliciesSummaryResponse>(
+      `/leave-policies/summary/${employment_id}`,
+      "GET",
+    );
+  }
+
+  async getLeavePoliciesDetails(
+    employment_id: string,
+  ): Promise<ListLeavePoliciesDetailsResponse> {
+    return this.request<ListLeavePoliciesDetailsResponse>(
+      `/leave-policies/details/${employment_id}`,
       "GET",
     );
   }
