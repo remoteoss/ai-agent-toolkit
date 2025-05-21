@@ -14,6 +14,7 @@ import type {
 } from "./payroll.types";
 import type {
   CreateTimeOffResponse,
+  DeclineTimeOffParams,
   GetTimeOffResponse,
   ListTimeOffParams,
   ListTimeOffResponse,
@@ -48,7 +49,7 @@ export interface ApiClient {
     id: string,
     cancel_reason?: string,
   ): Promise<TimeOffActionResponse>;
-  declineTimeOff(id: string): Promise<TimeOffActionResponse>;
+  declineTimeOff(params: DeclineTimeOffParams): Promise<TimeOffActionResponse>;
   approveCancelRequest(id: string): Promise<TimeOffActionResponse>;
   declineCancelRequest(id: string): Promise<TimeOffActionResponse>;
   listTimeOffTypes(): Promise<ListTimeOffTypesResponse>;
@@ -199,10 +200,15 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async declineTimeOff(id: string): Promise<TimeOffActionResponse> {
+  async declineTimeOff(
+    params: DeclineTimeOffParams,
+  ): Promise<TimeOffActionResponse> {
+    const { id, decline_reason } = params;
     return this.request<TimeOffActionResponse>(
       `/timeoff/${id}/decline`,
       "POST",
+      undefined,
+      { decline_reason },
     );
   }
 

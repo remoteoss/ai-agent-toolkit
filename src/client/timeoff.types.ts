@@ -182,3 +182,8 @@ export interface LeavePolicyDetails {
 export interface ListLeavePoliciesDetailsResponse {
   data: LeavePolicyDetails[];
 }
+
+export type DeclineTimeOffParams = {
+  id: string;
+  decline_reason: string;
+};
