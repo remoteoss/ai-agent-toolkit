@@ -1,4 +1,29 @@
+type IncompleteEmploymentStatus =
+  | "created"
+  | "created_awaiting_reserve"
+  | "created_reserve_paid"
+  | "initiated"
+  | "pending"
+  | "invited"
+  | "review"
+  | "pre_hire"
+  | "job_title_review";
+type OffboardedEmploymentStatus = "archived" | "deleted";
+export type EmploymentStatus =
+  | "active"
+  | IncompleteEmploymentStatus
+  | OffboardedEmploymentStatus;
+
+export type EmploymentType =
+  | "contractor"
+  | "direct_employee"
+  | "employee"
+  | "global_payroll_employee";
 export interface ListEmploymentsParams {
+  company_id?: string;
+  email?: string;
+  status?: EmploymentStatus;
+  employment_type?: EmploymentType;
   page?: number;
   page_size?: number;
 }
