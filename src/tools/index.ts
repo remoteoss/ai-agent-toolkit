@@ -20,6 +20,10 @@ import listExpensesToolFactory from "./listExpenses";
 import createExpenseToolFactory from "./createExpense";
 import getExpenseToolFactory from "./getExpense";
 import updateExpenseToolFactory from "./updateExpense";
+import listTimesheetsToolFactory from "./listTimesheets";
+import getTimesheetToolFactory from "./getTimesheet";
+import approveTimesheetToolFactory from "./approveTimesheet";
+import sendBackTimesheetToolFactory from "./sendBackTimesheet";
 
 const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
@@ -45,6 +49,10 @@ const toolFactories: ToolFactory[] = [
   updateExpenseToolFactory,
   // Add other tool factories here as they are created
   // e.g., createTimeOffToolFactory,
+  listTimesheetsToolFactory,
+  getTimesheetToolFactory,
+  approveTimesheetToolFactory,
+  sendBackTimesheetToolFactory,
 ];
 
 const getAllTools: ToolListFactory = (context: Context) =>

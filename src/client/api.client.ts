@@ -33,6 +33,16 @@ import type {
   UpdateExpenseParams,
   UpdateExpenseResponse,
 } from "./expense.types";
+import type {
+  ListTimesheetsParams,
+  ListTimesheetsResponse,
+  Timesheet,
+  TimesheetStatus,
+  GetTimesheetResponse,
+  ApproveTimesheetResponse,
+  SendBackTimesheetParams,
+  SentBackTimesheetResponse,
+} from "./timesheet.types";
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
@@ -72,6 +82,13 @@ export interface ApiClient {
     id: string,
     params: UpdateExpenseParams,
   ): Promise<UpdateExpenseResponse>;
+  listTimesheets(params: ListTimesheetsParams): Promise<ListTimesheetsResponse>;
+  getTimesheet(id: string): Promise<GetTimesheetResponse>;
+  approveTimesheet(id: string): Promise<ApproveTimesheetResponse>;
+  sendBackTimesheet(
+    id: string,
+    params: SendBackTimesheetParams,
+  ): Promise<SentBackTimesheetResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -313,6 +330,39 @@ export class RemoteApiClient implements ApiClient {
     return this.request<UpdateExpenseResponse>(
       `/expenses/${id}`,
       "PATCH",
+      undefined,
+      params,
+    );
+  }
+
+  async listTimesheets(
+    params: ListTimesheetsParams,
+  ): Promise<ListTimesheetsResponse> {
+    return this.request<ListTimesheetsResponse>(
+      "/timesheets",
+      "GET",
+      params as Record<string, string | number | boolean | undefined>,
+    );
+  }
+
+  async getTimesheet(id: string): Promise<GetTimesheetResponse> {
+    return this.request<GetTimesheetResponse>(`/timesheets/${id}`, "GET");
+  }
+
+  async approveTimesheet(id: string): Promise<ApproveTimesheetResponse> {
+    return this.request<ApproveTimesheetResponse>(
+      `/timesheets/${id}/approve`,
+      "POST",
+    );
+  }
+
+  async sendBackTimesheet(
+    id: string,
+    params: SendBackTimesheetParams,
+  ): Promise<SentBackTimesheetResponse> {
+    return this.request<SentBackTimesheetResponse>(
+      `/timesheets/${id}/send-back`,
+      "POST",
       undefined,
       params,
     );
