@@ -20,3 +20,4 @@ When creating a new tool, you might need to add more in the mix, for example to 
 ### Key Principles:
 - Write clean code, respecting Typescript best practices
 - Pay attention to variable names, don't make assumptions and typos
+- When creating types for enumerations (categorical strings), use enums directly

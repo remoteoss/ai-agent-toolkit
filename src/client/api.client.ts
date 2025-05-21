@@ -24,6 +24,15 @@ import type {
   TimeOffParams,
   UpdateTimeOffResponse,
 } from "./timeoff.types";
+import type {
+  ListExpensesParams,
+  ListExpensesResponse,
+  CreateExpenseParams,
+  CreateExpenseResponse,
+  GetExpenseResponse,
+  UpdateExpenseParams,
+  UpdateExpenseResponse,
+} from "./expense.types";
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
@@ -52,17 +61,17 @@ export interface ApiClient {
   listCompanyManagers(
     params: ListCompanyManagersParams,
   ): Promise<ListCompanyManagersResponse>;
-}
-
-export interface ApiClient {
-  listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
-  listEmployments(
-    params: ListEmploymentsParams,
-  ): Promise<ListEmploymentsResponse>;
   listPayrollRuns(
     params: ListPayrollRunsParams,
   ): Promise<ListPayrollRunsResponse>;
   showPayrollRun(params: ShowPayrollRunParams): Promise<ShowPayrollRunResponse>;
+  listExpenses(params: ListExpensesParams): Promise<ListExpensesResponse>;
+  createExpense(params: CreateExpenseParams): Promise<CreateExpenseResponse>;
+  getExpense(id: string): Promise<GetExpenseResponse>;
+  updateExpense(
+    id: string,
+    params: UpdateExpenseParams,
+  ): Promise<UpdateExpenseResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -269,6 +278,43 @@ export class RemoteApiClient implements ApiClient {
     return this.request<ShowPayrollRunResponse>(
       `/payroll-runs/${payroll_run_id}`,
       "GET",
+    );
+  }
+
+  async listExpenses(
+    params: ListExpensesParams,
+  ): Promise<ListExpensesResponse> {
+    return this.request<ListExpensesResponse>(
+      "/expenses",
+      "GET",
+      params as Record<string, string | number | boolean | undefined>,
+    );
+  }
+
+  async createExpense(
+    params: CreateExpenseParams,
+  ): Promise<CreateExpenseResponse> {
+    return this.request<CreateExpenseResponse>(
+      "/expenses",
+      "POST",
+      undefined,
+      params,
+    );
+  }
+
+  async getExpense(id: string): Promise<GetExpenseResponse> {
+    return this.request<GetExpenseResponse>(`/expenses/${id}`, "GET");
+  }
+
+  async updateExpense(
+    id: string,
+    params: UpdateExpenseParams,
+  ): Promise<UpdateExpenseResponse> {
+    return this.request<UpdateExpenseResponse>(
+      `/expenses/${id}`,
+      "PATCH",
+      undefined,
+      params,
     );
   }
 }
