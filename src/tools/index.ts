@@ -16,6 +16,10 @@ import showPayrollRunToolFactory from "./showPayrollRun";
 import updateTimeOffToolFactory from "./updateTimeOff";
 import leaveBalanceToolFactory from "./leaveBalance";
 import leavePoliciesDetailsToolFactory from "./leavePoliciesDetails";
+import listExpensesToolFactory from "./listExpenses";
+import createExpenseToolFactory from "./createExpense";
+import getExpenseToolFactory from "./getExpense";
+import updateExpenseToolFactory from "./updateExpense";
 
 const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
@@ -34,6 +38,11 @@ const toolFactories: ToolFactory[] = [
   showPayrollRunToolFactory,
   leaveBalanceToolFactory,
   leavePoliciesDetailsToolFactory,
+  // Expense tools
+  listExpensesToolFactory,
+  createExpenseToolFactory,
+  getExpenseToolFactory,
+  updateExpenseToolFactory,
   // Add other tool factories here as they are created
   // e.g., createTimeOffToolFactory,
 ];
