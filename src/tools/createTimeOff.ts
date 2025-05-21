@@ -4,13 +4,14 @@ import type { Tool, ToolFactory } from "../shared/tools";
 import {
   TimeOffStatus,
   TimeOffType,
-  TimeOffParams,
+  TimeOffParams
 } from "../client/timeoff.types";
 import type { ApiClient } from "../client/api.client";
 
 export const createTimeOffPrompt: string = `
-This tool creates a Time Off record in the Remote API.
-It requires employment_id, start_date, end_date, timeoff_type, timezone.
+This tool creates a PRE-APPROVED Time Off record in the Remote API.
+It requires employment_id, start_date, end_date, timeoff_type, timezone, and timeoff_days.
+IMPORTANT: Because this tool creates a time off request with an 'approved' status, the 'timeoff_type' MUST be one of the available time off types from the list_time_off_types tool.
 `;
 
 export const createTimeOffParameters = (_context?: Context) =>
@@ -23,8 +24,10 @@ export const createTimeOffParameters = (_context?: Context) =>
       .describe("The start date of the time off (YYYY-MM-DD)."),
     end_date: z.string().describe("The end date of the time off (YYYY-MM-DD)."),
     timeoff_type: z
-      .string()
-      .describe("The type of time off (e.g., sick_leave, paid_time_off)."),
+      .nativeEnum(TimeOffType)
+      .describe(
+        "The type of time off. MUST be one of the available time off types from the list_time_off_types tool.",
+      ),
     timezone: z.string().describe("The timezone for the time off dates."),
     notes: z
       .string()

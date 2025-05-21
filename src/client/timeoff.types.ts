@@ -130,3 +130,55 @@ export interface TimeOffBalanceResponse {
   unit: string;
   details?: any;
 }
+
+// Add types for leave balance endpoint
+export interface LimitedDaysandHoursResponse {
+  days: number;
+  hours: number;
+  type: "limited";
+}
+
+export interface UnlimitedDaysandHoursResponse {
+  type: "unlimited";
+}
+
+export interface EmployeeLeavePolicy {
+  description: string | null;
+  leave_type: string;
+  name: string;
+  unit: string;
+  leave_policy_variant_slug?: string;
+}
+
+export interface LeavePolicySummary {
+  annual_balance: LimitedDaysandHoursResponse | UnlimitedDaysandHoursResponse;
+  annual_entitlement:
+    | LimitedDaysandHoursResponse
+    | UnlimitedDaysandHoursResponse;
+  balance: LimitedDaysandHoursResponse | UnlimitedDaysandHoursResponse;
+  current_entitlement:
+    | LimitedDaysandHoursResponse
+    | UnlimitedDaysandHoursResponse;
+  leave_policy: EmployeeLeavePolicy;
+  pending_approval: LimitedDaysandHoursResponse;
+  taken: LimitedDaysandHoursResponse;
+  upcoming_approved: LimitedDaysandHoursResponse;
+  upcoming_requested: LimitedDaysandHoursResponse;
+  used: LimitedDaysandHoursResponse;
+  working_hours_per_day: number;
+}
+
+export interface ListLeavePoliciesSummaryResponse {
+  data: LeavePolicySummary[];
+}
+
+// Leave Policies Details types
+export interface LeavePolicyDetails {
+  custom: boolean;
+  leave_policy_variant_id: string;
+  name: string;
+}
+
+export interface ListLeavePoliciesDetailsResponse {
+  data: LeavePolicyDetails[];
+}

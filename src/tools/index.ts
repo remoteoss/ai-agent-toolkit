@@ -7,7 +7,6 @@ import createTimeOffToolFactory from "./createTimeOff";
 import declineCancelRequestToolFactory from "./declineCancelRequest";
 import declineTimeOffToolFactory from "./declineTimeOff";
 import getTimeOffToolFactory from "./getTimeOff";
-import getTimeOffBalanceToolFactory from "./getTimeOffBalance";
 import listCompanyManagersToolFactory from "./listCompanyManagers";
 import listEmploymentsToolFactory from "./listEmployments";
 import listPayrollRunsToolFactory from "./listPayrollRuns";
@@ -15,6 +14,8 @@ import listTimeOffToolFactory from "./listTimeOff";
 import listTimeOffTypesToolFactory from "./listTimeOffTypes";
 import showPayrollRunToolFactory from "./showPayrollRun";
 import updateTimeOffToolFactory from "./updateTimeOff";
+import leaveBalanceToolFactory from "./leaveBalance";
+import leavePoliciesDetailsToolFactory from "./leavePoliciesDetails";
 
 const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
@@ -29,9 +30,10 @@ const toolFactories: ToolFactory[] = [
   approveCancelRequestToolFactory,
   declineCancelRequestToolFactory,
   listTimeOffTypesToolFactory,
-  getTimeOffBalanceToolFactory,
   listPayrollRunsToolFactory,
   showPayrollRunToolFactory,
+  leaveBalanceToolFactory,
+  leavePoliciesDetailsToolFactory,
   // Add other tool factories here as they are created
   // e.g., createTimeOffToolFactory,
 ];

@@ -17,7 +17,7 @@ export const listPayrollRunsParameters = (
   page_size: z.ZodOptional<z.ZodNumber>;
 }> =>
   z.object({
-    payroll_period: z.string().optional().describe('The payroll period to fetch.'),
+    payroll_period: z.string().optional().describe('The payroll period to fetch. Must be in YYYY-MM-DD format.'),
     page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z.number().int().min(1).max(100).optional().describe('Number of items per page (1-100).'),
   });
