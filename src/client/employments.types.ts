@@ -9,16 +9,39 @@ type IncompleteEmploymentStatus =
   | "pre_hire"
   | "job_title_review";
 type OffboardedEmploymentStatus = "archived" | "deleted";
+
 export type EmploymentStatus =
   | "active"
   | IncompleteEmploymentStatus
   | OffboardedEmploymentStatus;
+
+export const employmentStatus: Record<string, EmploymentStatus> = {
+  ACTIVE: "active",
+  CREATED: "created",
+  CREATED_AWAITING_RESERVE: "created_awaiting_reserve",
+  CREATED_RESERVE_PAID: "created_reserve_paid",
+  INITIATED: "initiated",
+  PENDING: "pending",
+  INVITED: "invited",
+  REVIEW: "review",
+  PRE_HIRE: "pre_hire",
+  JOB_TITLE_REVIEW: "job_title_review",
+  ARCHIVED: "archived",
+  DELETED: "deleted",
+} as const;
 
 export type EmploymentType =
   | "contractor"
   | "direct_employee"
   | "employee"
   | "global_payroll_employee";
+
+export const employmentType: Record<string, EmploymentType> = {
+  CONTRACTOR: "contractor",
+  DIRECT_EMPLOYEE: "direct_employee",
+  EMPLOYEE: "employee",
+  GLOBAL_PAYROLL_EMPLOYEE: "global_payroll_employee",
+} as const;
 export interface ListEmploymentsParams {
   company_id?: string;
   email?: string;
