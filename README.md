@@ -25,12 +25,7 @@ This project is a TypeScript-based toolkit designed to integrate with the [Remot
 Here are some potential next steps and areas for future development:
 
 - **Tool Enhancements & Bug Fixes:**
-  - Investigate and fix the 404 error associated with the `listTimeOffTypes` tool.
   - Improve the reliability of complex multi-parameter tools (e.g., `createTimeOff`, `createExpense`) within the agent, potentially by refining tool descriptions or agent prompting.
-- **Slack Bot Improvements:**
-  - Implement persistent storage for conversation history (e.g., Redis, database) instead of in-memory.
-  - Explore more robust Slack message formatting using Block Kit for richer UI than `mrkdwn` alone.
-  - Enhance error handling and feedback to the user in the Slack bot.
 - **Testing:**
   - Add comprehensive unit tests for API client methods and tool execution logic.
   - Add integration tests for LangChain toolkit, MCP server, and Slack bot functionality.
@@ -41,6 +36,8 @@ Here are some potential next steps and areas for future development:
   - Publish to NPM.
 - **Add More Tools (General):**
   - Continuously evaluate and add tools for other useful Remote API functionalities based on user needs.
+- **Security:**
+  - Add functionality to the SDK to only expose certain tools to your LLM, instead of all
 
 ## Prerequisites
 
