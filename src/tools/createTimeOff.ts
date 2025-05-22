@@ -26,7 +26,7 @@ export const createTimeOffParameters = (_context?: Context) =>
     timeoff_type: z
       .nativeEnum(TimeOffType)
       .describe(
-        "The type of time off. MUST be one of the available time off types from the list_time_off_types tool."
+        "The type of time off. MUST be one of the available time off types from the list_time_off_types tool.",
       ),
     timezone: z.string().describe("The timezone for the time off dates."),
     notes: z
@@ -42,27 +42,27 @@ export const createTimeOffParameters = (_context?: Context) =>
           hours: z
             .number()
             .describe("The number of hours for this specific day."),
-        })
+        }),
       )
       .describe("Array of specific day entries with hours."),
     approver_id: z
       .string()
       .optional()
       .describe(
-        "The user ID of the approver (company admin/manager). If not provided, the first company manager will be used."
+        "The user ID of the approver (company admin/manager). If not provided, the first company manager will be used.",
       ),
     approved_at: z
       .string()
       .optional()
       .describe(
-        "The approval datetime in ISO8601 format. If not provided, the current date and time will be used."
+        "The approval datetime in ISO8601 format. If not provided, the current date and time will be used.",
       ),
   });
 
 export const createTimeOff = async (
   apiClient: ApiClient,
   _context: Context,
-  params: z.infer<z.AnyZodObject>
+  params: z.infer<z.AnyZodObject>,
 ): Promise<any> => {
   try {
     // Validate and cast params to expected type

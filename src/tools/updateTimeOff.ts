@@ -14,7 +14,11 @@ You must provide the time off ID and any fields you wish to update.
 
 export const updateTimeOffParameters = (_context?: Context) =>
   z.object({
-    id: z.string().describe("The ID of the time off to update."),
+    id: z
+      .string()
+      .describe(
+        "The ID of the time off to update. Must be in valid UUID format from the listTimeOff tool",
+      ),
     employment_id: z.string().optional().describe("The employment ID."),
     start_date: z.string().optional().describe("The start date (YYYY-MM-DD)."),
     end_date: z.string().optional().describe("The end date (YYYY-MM-DD)."),
@@ -32,7 +36,11 @@ export const updateTimeOffParameters = (_context?: Context) =>
       .describe("Array of day/hour entries."),
     notes: z.string().optional().describe("Notes for the time off."),
     document: z.any().optional().describe("Optional document."),
-    approver_id: z.string().optional().describe("The approver's user ID."),
+    approver_id: z
+      .string()
+      .describe(
+        "The approver's user ID. If not provided, use the first company manager from the.",
+      ),
     approved_at: z
       .string()
       .optional()

@@ -10,7 +10,16 @@ This tool approves a Time Off request by its ID in the Remote API.
 
 export const approveTimeOffParameters = (_context?: Context) =>
   z.object({
-    id: z.string().describe("The ID of the time off to approve."),
+    id: z
+      .string()
+      .describe(
+        "The UUID of the time off to approve. Must be in valid UUID format from the listTimeOff tool",
+      ),
+    approver_id: z
+      .string()
+      .describe(
+        "The UUID of the approver. The approver's user ID. If not provided, use the first company manager from the listCompanyManagers tool.",
+      ),
   });
 
 export const approveTimeOff = async (
@@ -19,7 +28,10 @@ export const approveTimeOff = async (
   params: any,
 ): Promise<TimeOffActionResponse | string> => {
   try {
-    const result = await apiClient.approveTimeOff(params.id);
+    const result = await apiClient.approveTimeOff(
+      params.id,
+      params.approver_id,
+    );
     return result;
   } catch (error) {
     console.error("Failed to approve time off:", error);

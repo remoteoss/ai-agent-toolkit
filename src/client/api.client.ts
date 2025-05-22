@@ -57,7 +57,10 @@ export interface ApiClient {
   createTimeOff(params: TimeOffParams): Promise<CreateTimeOffResponse>;
   updateTimeOff(params: TimeOffParams): Promise<UpdateTimeOffResponse>;
   getTimeOff(id: string): Promise<GetTimeOffResponse>;
-  approveTimeOff(id: string): Promise<TimeOffActionResponse>;
+  approveTimeOff(
+    id: string,
+    approver_id: string,
+  ): Promise<TimeOffActionResponse>;
   cancelTimeOff(
     id: string,
     cancel_reason?: string,
@@ -200,10 +203,15 @@ export class RemoteApiClient implements ApiClient {
     return this.request<GetTimeOffResponse>(`/timeoff/${id}`, "GET");
   }
 
-  async approveTimeOff(id: string): Promise<TimeOffActionResponse> {
+  async approveTimeOff(
+    id: string,
+    approver_id: string,
+  ): Promise<TimeOffActionResponse> {
     return this.request<TimeOffActionResponse>(
       `/timeoff/${id}/approve`,
       "POST",
+      undefined,
+      { approver_id },
     );
   }
 

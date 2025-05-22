@@ -8,11 +8,7 @@ import {
   SayFn,
 } from "@slack/bolt";
 import { RemoteApiAgentToolkit } from "../langchain/toolkit";
-import {
-  AgentExecutor,
-  createStructuredChatAgent,
-  AgentStep,
-} from "langchain/agents";
+import { AgentExecutor, createStructuredChatAgent } from "langchain/agents";
 import { ChatOpenAI } from "@langchain/openai";
 import { type ChatPromptTemplate } from "@langchain/core/prompts";
 import { pull } from "langchain/hub";
@@ -54,9 +50,8 @@ async function initializeAgentExecutor(userId: string) {
     "hwchase17/structured-chat-agent",
   );
 
-  // Get or create chat history for the user
   const history = conversationHistories[userId] || new ChatMessageHistory();
-  conversationHistories[userId] = history; // Ensure it's stored if new
+  conversationHistories[userId] = history;
 
   const memory = new ConversationSummaryBufferMemory({
     llm: llm,
@@ -109,10 +104,12 @@ async function handleUserMessage(
 
     const executor = await initializeAgentExecutor(userId);
     const agentInput =
-      `TASK: You are a helpful HR assistant. You have access to a list of tools to help the user with their requests. Resources that may require action from the user are listTimeOff, listTimesheets, listExpenses. 
-      When replying to a user, always explain what actions the user can take to resolve the issue. E.g., ask the user if they want to approve or reject a pending time off, expense or timesheet. ` +
+      `TASK: You are a helpful HR assistant. You have access to a list of tools to help the user with their requests. 
+      **Resources that may require attention from the user are listTimeOff, listTimesheets, listExpense**
+      When replying to a user, always explain what actions the user can take to resolve the issue. E.g., ask the user if they want to approve or reject a pending time off, expense or timesheet. 
+      When returning employment related resources, avoid showing the UUID but use the employee name instead` +
       `Today is ${new Date().toLocaleDateString()}. ` +
-      `REMEMBER YOU MUST format your responses using Slack's mrkdwn syntax (e.g., *bold*, _italic_, ~strike~).  ` +
+      `REMEMBER YOU **MUST** format your responses using Slack's mrkdwn syntax (e.g., *bold*, _italic_, ~strike~).  ` +
       `The user's latest message is: "${userProcessedText}"`;
 
     const result = await executor.invoke({ input: agentInput });
