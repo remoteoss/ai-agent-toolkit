@@ -8,7 +8,7 @@ import type {
 import type { ApiClient } from "../client/api.client";
 
 export const listExpensesPrompt: string = `
-This tool lists Expense records from the Remote API.
+This tool lists Expense records from the Remote API.  It can be used to get the expenses that requires action from the user (to approve or reject pending expense requests). Declined or Approved expenses do not require action from the user.
 It supports pagination.
 The amount is in cents, take that into account when returning the result, {"amount": 1000, "currency": "USD"} means 10 dollars.
 `;

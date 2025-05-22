@@ -8,12 +8,12 @@ import type {
 import type { ApiClient } from "../client/api.client";
 
 export const listTimeOffPrompt: string = `
-This tool lists Time Off records from the Remote API.
-It can be filtered by employment_id, timeoff_type, status, and supports pagination and sorting.
+This tool lists Time Off records from the Remote API. It can be used to get the time off that requires action from the user (to approve or reject pending time off requests)..
+It can be filtered by employment_id, timeoff_type, status, and supports pagination and sorting
 `;
 
 export const listTimeOffParameters = (
-  _context?: Context
+  _context?: Context,
 ): z.ZodObject<{
   employment_id: z.ZodOptional<z.ZodString>;
   timeoff_type: z.ZodOptional<z.ZodString>;
@@ -27,12 +27,14 @@ export const listTimeOffParameters = (
     employment_id: z
       .string()
       .optional()
-      .describe("Filter time off for a specific employment ID. Must be a valid employment ID from the list_employments tool, in UUID format."),
+      .describe(
+        "Filter time off for a specific employment ID. Must be a valid employment ID from the list_employments tool, in UUID format.",
+      ),
     timeoff_type: z
       .string()
       .optional()
       .describe(
-        "Filter time off by its type (e.g., sick_leave, paid_time_off)."
+        "Filter time off by its type (e.g., sick_leave, paid_time_off).",
       ),
     status: z
       .string()
@@ -64,11 +66,11 @@ export const listTimeOffParameters = (
 export const listTimeOff = async (
   apiClient: ApiClient,
   _context: Context,
-  params: z.infer<ReturnType<typeof listTimeOffParameters>>
+  params: z.infer<ReturnType<typeof listTimeOffParameters>>,
 ): Promise<ListTimeOffResponse | string> => {
   try {
     const timeOffData = await apiClient.listTimeOff(
-      params as ListTimeOffParams
+      params as ListTimeOffParams,
     );
     return timeOffData;
   } catch (error) {

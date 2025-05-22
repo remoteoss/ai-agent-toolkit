@@ -9,7 +9,7 @@ import {
 import type { ApiClient } from "../client/api.client";
 
 export const listTimesheetsPrompt: string = `
-This tool lists all timesheets from the Remote API.
+This tool lists all timesheets from the Remote API.  It can be used to get the timesheets that requires action from the user (to approve or reject pending timesheet submissions).
 It can be filtered by status and supports pagination and sorting.
 `;
 
