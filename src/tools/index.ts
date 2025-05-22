@@ -25,6 +25,7 @@ import listTimesheetsToolFactory from "./listTimesheets";
 import getTimesheetToolFactory from "./getTimesheet";
 import approveTimesheetToolFactory from "./approveTimesheet";
 import sendBackTimesheetToolFactory from "./sendBackTimesheet";
+import listPayslipsToolFactory from "./listPayslips";
 
 const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
@@ -55,6 +56,7 @@ const toolFactories: ToolFactory[] = [
   getTimesheetToolFactory,
   approveTimesheetToolFactory,
   sendBackTimesheetToolFactory,
+  listPayslipsToolFactory,
 ];
 
 const getAllTools: ToolListFactory = (context: Context) =>

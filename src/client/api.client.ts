@@ -13,6 +13,8 @@ import type {
   ListPayrollRunsResponse,
   ShowPayrollRunParams,
   ShowPayrollRunResponse,
+  ListPayslipsParams,
+  ListPayslipsResponse,
 } from "./payroll.types";
 import type {
   CreateTimeOffResponse,
@@ -82,6 +84,7 @@ export interface ApiClient {
     params: ListPayrollRunsParams,
   ): Promise<ListPayrollRunsResponse>;
   showPayrollRun(params: ShowPayrollRunParams): Promise<ShowPayrollRunResponse>;
+  listPayslips(params: ListPayslipsParams): Promise<ListPayslipsResponse>;
   listExpenses(params: ListExpensesParams): Promise<ListExpensesResponse>;
   createExpense(params: CreateExpenseParams): Promise<CreateExpenseResponse>;
   getExpense(id: string): Promise<GetExpenseResponse>;
@@ -323,6 +326,16 @@ export class RemoteApiClient implements ApiClient {
     return this.request<ShowPayrollRunResponse>(
       `/payroll-runs/${payroll_run_id}`,
       "GET",
+    );
+  }
+
+  async listPayslips(
+    params: ListPayslipsParams,
+  ): Promise<ListPayslipsResponse> {
+    return this.request<ListPayslipsResponse>(
+      "/payslips",
+      "GET",
+      params as Record<string, string | number | boolean | undefined>,
     );
   }
 
