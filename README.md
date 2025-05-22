@@ -4,32 +4,43 @@ This project is a TypeScript-based toolkit designed to integrate with the [Remot
 
 ## Features
 
-- **API Client**: A typed client for interacting with the Remote API (initially targeting time off endpoints).
-- **LangChain Tools**: Exposes Remote API functionalities as LangChain `StructuredTool` instances, compatible with agents.
-- **MCP Server**: Runs an MCP server that exposes the tools, allowing integration with MCP-compatible clients like Claude Desktop.
+- **Comprehensive API Client**: A typed client for interacting with a wide range of Remote API endpoints.
+- **Extensive LangChain Tools**: Exposes numerous Remote API functionalities as LangChain `StructuredTool` instances, including:
+  - Time Off Management (list, create, get, update, cancel, approve, decline, balance, policies)
+  - Employment Data (list, show)
+  - Expense Management (list, get, create, update)
+  - Timesheet Handling (list, get, approve, send back)
+  - Payroll Information (list runs, show run)
+  - Company Information (list managers)
+- **MCP Server**: Runs an MCP server that exposes all implemented tools, allowing integration with MCP-compatible clients like Claude Desktop.
+- **Conversational Slack Bot Example**: An `hr-assistant-slack-bot.ts` demonstrating:
+  - Tool usage within a LangChain agent.
+  - Conversational memory management.
+  - Interaction in Slack DMs and the AI Agent container.
+  - Real-time status updates (e.g., "thinking...") in the AI container.
 - **Extensible**: Designed to easily add more tools for other Remote API endpoints.
 
 ## Roadmap / Future Development
 
 Here are some potential next steps and areas for future development:
 
-- **Add More Tools:**
-  - Create Time Off
-  - Delete Time Off
-  - Approve Time Off
-  - List Payroll Runs
-  - _(Add other desired API functionalities as tools)_
-- **Enhance Hackathon Demos:**
-  - Create/improve LangChain tool usage examples for demonstration.
-  - Create/improve MCP server usage examples for demonstration.
-- **Implement Testing:**
-  - Add unit tests for API client methods and tool execution logic.
-  - Add integration tests for LangChain toolkit and MCP server functionality.
+- **Tool Enhancements & Bug Fixes:**
+  - Investigate and fix the 404 error associated with the `listTimeOffTypes` tool.
+  - Improve the reliability of complex multi-parameter tools (e.g., `createTimeOff`, `createExpense`) within the agent, potentially by refining tool descriptions or agent prompting.
+- **Slack Bot Improvements:**
+  - Implement persistent storage for conversation history (e.g., Redis, database) instead of in-memory.
+  - Explore more robust Slack message formatting using Block Kit for richer UI than `mrkdwn` alone.
+  - Enhance error handling and feedback to the user in the Slack bot.
+- **Testing:**
+  - Add comprehensive unit tests for API client methods and tool execution logic.
+  - Add integration tests for LangChain toolkit, MCP server, and Slack bot functionality.
 - **NPM Package Release:**
   - Refine the build process.
   - Update `package.json` for publishing (main, types, files, repository, author, license, keywords).
   - Add TSDoc comments and generate API documentation.
   - Publish to NPM.
+- **Add More Tools (General):**
+  - Continuously evaluate and add tools for other useful Remote API functionalities based on user needs.
 
 ## Prerequisites
 
@@ -74,8 +85,6 @@ import { ChatOpenAI } from "@langchain/openai";
 import type { ChatPromptTemplate } from "@langchain/core/prompts";
 import { pull } from "langchain/hub";
 import { AgentExecutor, createStructuredChatAgent } from "langchain/agents";
-import * as dotenv from "dotenv";
-dotenv.config();
 
 async function main() {
   const llm = new ChatOpenAI({
@@ -83,21 +92,11 @@ async function main() {
     temperature: 0,
   });
 
-  const remoteApiKey = process.env.REMOTE_API_KEY;
-  if (!remoteApiKey) {
-    console.error("REMOTE_API_KEY is not set.");
-    process.exit(1);
-  }
   const remoteApiToolkit = new RemoteApiAgentToolkit({ apiKey: remoteApiKey });
 
   const tools = remoteApiToolkit.getTools();
-  console.log(
-    "Tools available to the agent:",
-    tools.map((t) => t.name)
-  );
-
   const prompt = await pull<ChatPromptTemplate>(
-    "hwchase17/structured-chat-agent"
+    "hwchase17/structured-chat-agent",
   );
 
   const agent = await createStructuredChatAgent({
@@ -169,13 +168,13 @@ To use this MCP server with Claude Desktop, you'll need to edit your `claude_des
         "RemoteAIToolkit": {
           "command": "/Users/jeroen.vandergeer/.asdf/installs/nodejs/23.11.0/bin/node",
           "args": [
-            "/Users/jeroen.vandergeer/Projects/remote-api-agent-toolkit-ts/node_modules/ts-node/dist/bin.js",
-            "/Users/jeroen.vandergeer/Projects/remote-api-agent-toolkit-ts/src/mcp/cli.ts"
+            "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts/node_modules/ts-node/dist/bin.js",
+            "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts/src/mcp/cli.ts"
           ],
           "env": {
-            "REMOTE_API_KEY": "PUT_SANDBOX_KEY_HERE"
+            "REMOTE_API_KEY": "YOUR_API_KEY"
           },
-          "workingDirectory": "/Users/jeroen.vandergeer/Projects/remote-api-agent-toolkit-ts"
+          "workingDirectory": "/Users/jeroen.vandergeer/Projects/remote-ai-agent-toolkit-ts"
         }
       }
     }
@@ -183,8 +182,7 @@ To use this MCP server with Claude Desktop, you'll need to edit your `claude_des
 
     **Important Notes for Claude Desktop Config:**
 
-    - **`command`**: This points to your locally installed `ts-node`. If `ts-node` is global and in Claude's PATH, you might simplify it. If you use `asdf` or `nvm`, the direct path to the `node` executable provided by them is most robust, see next point.
-    - **`PATH` in `env`**: The provided `PATH` example includes a common location for `asdf` shims. **Adjust this PATH to ensure the `node` executable (used by `ts-node`) can be found.** If you use `nvm`, the path would look different. You can find your node path by running `which node` in your configured terminal. The specific path to the node executable can also be used as the `"command"`, with `ts-node`'s `bin.js` script as the first argument (see previous conversation history for this alternative).
+    - **`command`**: This points to your locally installed `ts-node`. If `ts-node` is global and in Claude's PATH, you might simplify it. If you use `asdf` or `nvm`, the direct path to the `node` executable provided by them is most robust. Using relative paths likely will not work
     - **`REMOTE_API_KEY`**: Ensure this is set to your actual key.
     - **`workingDirectory`**: Set to the root of this project.
 
