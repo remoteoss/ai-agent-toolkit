@@ -9,6 +9,10 @@ import type {
   ShowEmploymentResponse,
 } from "./employments.types";
 import type {
+  ListIncentivesParams,
+  ListIncentivesResponse,
+} from "./incentives.types";
+import type {
   ListPayrollRunsParams,
   ListPayrollRunsResponse,
   ShowPayrollRunParams,
@@ -54,6 +58,7 @@ export interface ApiClient {
   listEmployments(
     params: ListEmploymentsParams,
   ): Promise<ListEmploymentsResponse>;
+  listIncentives(params: ListIncentivesParams): Promise<ListIncentivesResponse>;
   showEmployment(params: ShowEmploymentParams): Promise<ShowEmploymentResponse>;
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
   createTimeOff(params: TimeOffParams): Promise<CreateTimeOffResponse>;
@@ -406,6 +411,16 @@ export class RemoteApiClient implements ApiClient {
       "POST",
       undefined,
       params,
+    );
+  }
+
+  async listIncentives(
+    params: ListIncentivesParams,
+  ): Promise<ListIncentivesResponse> {
+    return this.request<ListIncentivesResponse>(
+      "/incentives",
+      "GET",
+      params as Record<string, string | number | boolean | undefined>,
     );
   }
 }
