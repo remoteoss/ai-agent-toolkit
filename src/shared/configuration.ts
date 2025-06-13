@@ -4,5 +4,6 @@
  */
 export interface Context {
   apiKey?: string;
+  allowedTools?: string[]; // Array of tool names to allow. If undefined, all tools are allowed.
   [key: string]: any;
 }

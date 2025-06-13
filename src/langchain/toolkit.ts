@@ -1,12 +1,13 @@
-import { BaseToolkit } from '@langchain/core/tools';
-import { RemoteApiTool } from './tool';
-import { RemoteApiClient, type ApiClient } from '../client';
-import getAllToolsFunction from '../tools'; // This is our ToolListFactory
-import type { Context } from '../shared';
+import { BaseToolkit } from "@langchain/core/tools";
+import { RemoteApiTool } from "./tool";
+import { RemoteApiClient, type ApiClient } from "../client";
+import getAllTools from "../tools"; // This is our ToolListFactory
+import type { Context } from "../shared";
 
 export interface RemoteApiToolkitParams {
   apiKey: string;
   apiBaseUrl?: string;
+  allowedTools?: string[]; // Array of tool names to allow. If undefined, all tools are allowed.
 }
 
 export class RemoteApiAgentToolkit extends BaseToolkit {
@@ -14,27 +15,25 @@ export class RemoteApiAgentToolkit extends BaseToolkit {
   private _context: Context;
   tools: RemoteApiTool[];
 
-  constructor({ apiKey, apiBaseUrl }: RemoteApiToolkitParams) {
+  constructor({ apiKey, apiBaseUrl, allowedTools }: RemoteApiToolkitParams) {
     super();
     if (!apiKey) {
-      throw new Error('API key is required for RemoteApiAgentToolkit');
+      throw new Error("API key is required for RemoteApiAgentToolkit");
     }
     this._apiClient = new RemoteApiClient(apiKey, apiBaseUrl);
-    this._context = { apiKey }; 
+    this._context = { apiKey, allowedTools };
 
-    const allToolFactories = getAllToolsFunction(this._context);
-
-    this.tools = allToolFactories.map(
-      (toolDefinition) =>
+    this.tools = getAllTools(this._context).map(
+      toolDefinition =>
         new RemoteApiTool({
           apiClient: this._apiClient,
           toolDefinition,
           context: this._context,
-        })
+        }),
     );
   }
 
   getTools(): RemoteApiTool[] {
     return this.tools;
   }
-} 
+}

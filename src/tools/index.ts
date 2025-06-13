@@ -27,7 +27,7 @@ import approveTimesheetToolFactory from "./approveTimesheet";
 import sendBackTimesheetToolFactory from "./sendBackTimesheet";
 import listPayslipsToolFactory from "./listPayslips";
 
-const toolFactories: ToolFactory[] = [
+export const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
   listEmploymentsToolFactory,
   showEmploymentToolFactory,
@@ -59,7 +59,25 @@ const toolFactories: ToolFactory[] = [
   listPayslipsToolFactory,
 ];
 
-const getAllTools: ToolListFactory = (context: Context) =>
-  toolFactories.map(factory => factory(context));
+const getAllTools: ToolListFactory = (context: Context) => {
+  const allTools = toolFactories.map(factory => factory(context));
+
+  if (!context.allowedTools) {
+    return allTools;
+  }
+
+  const filteredTools = allTools.filter(tool =>
+    context.allowedTools!.includes(tool.name),
+  );
+
+  if (filteredTools.length === 0) {
+    console.warn(
+      "No tools matched the allowedTools filter. Available tools:",
+      allTools.map(t => t.name).join(", "),
+    );
+  }
+
+  return filteredTools;
+};
 
 export default getAllTools;

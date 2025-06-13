@@ -27,7 +27,7 @@ export const createExpenseParameters = (_context?: Context) =>
     amount: z
       .number()
       .describe(
-        "Amount of the expense in the specified currency. The amount is in cents."
+        "Amount of the expense in the specified currency. The amount is in cents.",
       ),
     currency: z
       .string()
@@ -42,14 +42,14 @@ export const createExpenseParameters = (_context?: Context) =>
     receipt: receiptSchema
       .optional()
       .describe(
-        "A single receipt file (base64 encoded). Cannot be used with receipts."
+        "A single receipt file (base64 encoded). Cannot be used with receipts.",
       ),
     receipts: z
       .array(receiptSchema)
       .max(5)
       .optional()
       .describe(
-        "An array of up to 5 receipt files (base64 encoded). Cannot be used with receipt."
+        "An array of up to 5 receipt files (base64 encoded). Cannot be used with receipt.",
       ),
     reviewed_at: z
       .string()
@@ -59,7 +59,7 @@ export const createExpenseParameters = (_context?: Context) =>
       .string()
       .optional()
       .describe(
-        "User ID of the reviewer. If not provided, the user who created the token will be used."
+        "User ID of the reviewer. If not provided, the user who created the token will be used.",
       ),
     timezone: z.string().optional().describe("Timezone for the expense dates."),
   });
@@ -67,7 +67,7 @@ export const createExpenseParameters = (_context?: Context) =>
 export const createExpense = async (
   apiClient: ApiClient,
   _context: Context,
-  params: any
+  params: any,
 ): Promise<CreateExpenseResponse | string> => {
   try {
     const result = await apiClient.createExpense(params as CreateExpenseParams);

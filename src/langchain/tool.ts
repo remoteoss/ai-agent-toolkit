@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { StructuredTool, ToolParams } from '@langchain/core/tools';
-import { CallbackManagerForToolRun } from '@langchain/core/callbacks/manager';
-import type { ApiClient } from '../client';
-import type { Tool as LocalTool } from '../shared'; // Our internal Tool definition
-import type { Context } from '../shared';
+import { z } from "zod";
+import { StructuredTool, ToolParams } from "@langchain/core/tools";
+import { CallbackManagerForToolRun } from "@langchain/core/callbacks/manager";
+import type { ApiClient } from "../client";
+import type { Tool as LocalTool } from "../shared"; // Our internal Tool definition
+import type { Context } from "../shared";
 
 export interface RemoteApiToolParams extends ToolParams {
   apiClient: ApiClient;
@@ -18,39 +18,39 @@ export class RemoteApiTool extends StructuredTool {
 
   name: string;
   description: string;
-  schema: z.ZodObject<any, any, any, any>; 
+  schema: z.ZodObject<any, any, any, any>;
 
   constructor({
     apiClient,
     toolDefinition,
     context,
-    ...rest 
+    ...rest
   }: RemoteApiToolParams) {
-    super(rest); 
+    super(rest);
     this.apiClient = apiClient;
     this.toolDefinition = toolDefinition;
     this.context = context;
 
     this.name = toolDefinition.name;
     this.description = toolDefinition.description;
-    this.schema = toolDefinition.parameters as z.ZodObject<any, any, any, any>; 
+    this.schema = toolDefinition.parameters as z.ZodObject<any, any, any, any>;
   }
 
   protected async _call(
-    arg: z.output<this['schema']>,
+    arg: z.output<this["schema"]>,
     _runManager?: CallbackManagerForToolRun,
-    _config?: any
+    _config?: any,
   ): Promise<string> {
     try {
       const result = await this.toolDefinition.execute(
         this.apiClient,
         this.context,
-        arg
+        arg,
       );
-      if (typeof result === 'string') {
+      if (typeof result === "string") {
         return result;
       }
-      return JSON.stringify(result, null, 2); 
+      return JSON.stringify(result, null, 2);
     } catch (error) {
       console.error(`Error executing tool ${this.name}:`, error);
       if (error instanceof Error) {
@@ -59,4 +59,4 @@ export class RemoteApiTool extends StructuredTool {
       return `An unknown error occurred in ${this.name}.`;
     }
   }
-} 
+}
