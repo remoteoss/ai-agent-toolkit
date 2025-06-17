@@ -16,10 +16,8 @@ function parseArgs(args: string[]): CliOptions {
       options.apiKey = arg.substring('--api-key='.length);
     } else if (arg.startsWith('--api-base-url=')) {
       options.apiBaseUrl = arg.substring('--api-base-url='.length);
-    } else if (arg.startsWith('--allowed-tools=')) {
-      options.allowedTools = arg
-        .substring('--allowed-tools='.length)
-        .split(',');
+    } else if (arg.startsWith('--tools=')) {
+      options.allowedTools = arg.substring('--tools='.length).split(',');
     } else if (arg.startsWith('--')) {
       console.warn(`Warning: Unknown argument ${arg} ignored.`);
     }

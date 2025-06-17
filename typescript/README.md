@@ -59,22 +59,14 @@ console.log(result);
 
 ### Tool Configuration
 
-You can configure the tools available to the agent in two ways:
+You can configure the tools available to the agent by passing the `allowedTools` array in the toolkit's constructor.
 
-1.  **Environment Variable:** Set the `ALLOWED_TOOLS` environment variable with a comma-separated list of tool names.
-
-    ```bash
-    export ALLOWED_TOOLS="list_employments,create_time_off"
-    ```
-
-2.  **Constructor Options:** Pass the `allowedTools` array in the toolkit's constructor.
-
-    ```typescript
-    const toolkit = new RemoteApiAgentToolkit({
-      apiKey: process.env.REMOTE_API_KEY!,
-      allowedTools: ['list_employments', 'create_time_off'],
-    });
-    ```
+```typescript
+const toolkit = new RemoteApiAgentToolkit({
+  apiKey: process.env.REMOTE_API_KEY!,
+  allowedTools: ['list_employments', 'create_time_off'],
+});
+```
 
 ### Model Context Protocol (MCP) Server
 

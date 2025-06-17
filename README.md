@@ -47,10 +47,15 @@ const agentExecutor = new AgentExecutor({
 
 #### Tool Configuration
 
-You can control which tools are available by setting the `ALLOWED_TOOLS` environment variable with a comma-separated list of tool names.
+You can control which tools are available by passing the `allowedTools` option to the `RemoteApiAgentToolkit` constructor.
 
-```bash
-export ALLOWED_TOOLS="list_employments,create_time_off"
+```typescript
+const toolkit = new RemoteApiAgentToolkit({
+  apiKey: process.env.REMOTE_API_KEY!,
+  allowedTools: ["list_employments", "create_time_off"],
+});
+
+const tools = toolkit.getTools();
 ```
 
 This will restrict the agent to only use the `list_employments` and `create_time_off` tools.
