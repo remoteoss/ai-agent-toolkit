@@ -2,8 +2,20 @@
   "name": "@remoteoss/ai-agent-toolkit",
   "version": "0.1.0",
   "description": "Toolkit for integrating the Remote API into agentic workflows",
+  "author": "Remote.com <engineering@remote.com> (https://remote.com/)",
+  "license": "MIT",
+  "homepage": "https://github.com/remoteoss/ai-agent-toolkit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remoteoss/ai-agent-toolkit.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts",
@@ -21,14 +33,12 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "author": "Remote <help@remote.com> (https://developer.remote.com/)",
   "contributors": [
     "Jeroen van der Geer <jeroen.vandergeer@remote.com>",
     "Paolo Quadri <paolo.quadri@remote.com>",
     "Manuel Kallenbach <manuel.kallenbach@remote.com>",
     "Luis Serrano <luis@remote.com>"
   ],
-  "license": "MIT",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.14",
