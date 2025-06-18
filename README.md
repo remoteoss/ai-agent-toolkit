@@ -5,6 +5,7 @@ The Remote AI Agent Toolkit enables popular agent frameworks, including LangChai
 This repository contains:
 
 - [TypeScript Toolkit](./typescript)
+- [Model Context Protocol (MCP) server](./mcp)
 
 ## What can I use this for?
 
@@ -86,6 +87,8 @@ npx -y @remoteoss/mcp --api-key=YOUR_REMOTE_API_KEY
 
 Replace `YOUR_REMOTE_API_KEY` with your actual Remote API key, or set the `REMOTE_API_KEY` environment variable.
 
+For more detailed information, please refer to the [MCP package README](./mcp/README.md).
+
 ## Supported API Methods
 
 The toolkit provides a set of tools to interact with the Remote API. The available tools include:
@@ -117,4 +120,4 @@ The toolkit provides a set of tools to interact with the Remote API. The availab
 - Update an Expense
 - Update a Time Off request
 
-For more detailed information, please refer to the [TypeScript package README](./typescript/README.md).
+For more detailed information, please refer to the [TypeScript package README](./typescript/README.md) and the [MCP package README](./mcp/README.md).
