@@ -6,7 +6,23 @@ This repository contains:
 
 - [TypeScript Toolkit](./typescript)
 
-## TypeScript
+## What can I use this for?
+
+You can use this toolkit to build AI agents that can interact with your Remote account. For example, you could build an agent that does the following:
+
+- **Automated HR Assistant**: An AI-powered chatbot that can answer employee questions about their leave balance, company policies, or the status of their time off requests. It could also help managers approve or decline time off requests directly from a chat interface like Slack.
+
+- **Automated Onboarding/Offboarding**: When a new employee is hired (or leaves the company), an agent could automatically trigger a sequence of actions, like creating necessary accounts, scheduling introduction meetings, or ensuring final payslips are processed correctly.
+
+- **Expense Management**: An agent could help employees submit expenses by guiding them through the process, and automatically categorize and submit them for approval.
+
+## Getting Started
+
+To use the toolkit, you need a Remote API key.
+
+### Finding your API Key
+
+You can create and find your API key in your Remote dashboard. For a detailed guide on how to get your API key, please follow the instructions in our **[Quick Start Guide](https://developer.remote.com/docs/quick-start-guide)**.
 
 ### Installation
 
