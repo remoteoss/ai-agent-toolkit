@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { RemoteApiMcpServer } from './mcp_server';
+import { RemoteApiMcpServer } from '@remoteoss/ai-agent-toolkit';
 import { green } from 'colors';
 
 interface CliOptions {
