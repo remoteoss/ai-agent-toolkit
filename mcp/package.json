@@ -1,6 +1,6 @@
 {
   "name": "@remoteoss/mcp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "description": "A CLI to run the Remote AI Agent Toolkit MCP server.",
   "license": "MIT",
@@ -14,10 +14,13 @@
   "homepage": "https://github.com/remoteoss/ai-agent-toolkit/mcp",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": "dist/index.js",
+  "bin": {
+    "mcp": "dist/index.js"
+  },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "package.json"
   ],
   "scripts": {
     "build": "tsc",
