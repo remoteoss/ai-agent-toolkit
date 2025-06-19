@@ -5,7 +5,7 @@ This package contains the TypeScript implementation of the Remote AI Agent Toolk
 ## Installation
 
 ```bash
-npm install remote-api-agent-toolkit
+npm install @remoteoss/ai-agent-toolkit
 ```
 
 ## Requirements
@@ -22,7 +22,7 @@ The library needs to be configured with your Remote API key.
 To use the toolkit with LangChain, you can instantiate `RemoteApiAgentToolkit` and pass the tools to your agent.
 
 ```typescript
-import { RemoteApiAgentToolkit } from 'remote-api-agent-toolkit/langchain';
+import { RemoteApiAgentToolkit } from '@remoteoss/ai-agent-toolkit/langchain';
 import { ChatOpenAI } from '@langchain/openai';
 import { AgentExecutor, createStructuredChatAgent } from 'langchain/agents';
 import { hub } from 'langchain/hub';

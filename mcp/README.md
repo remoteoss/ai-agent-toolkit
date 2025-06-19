@@ -49,11 +49,11 @@ This enhances security by restricting the capabilities of the agent to only what
 
 The server can be configured via command-line arguments or environment variables.
 
-| Argument         | Environment Variable   | Description                                                                                                    | Required |
-| ---------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------- | -------- |
-| `--api-key`      | `REMOTE_API_KEY`       | Your Remote API key.                                                                                           | Yes      |
-| `--tools`        | `REMOTE_ALLOWED_TOOLS` | A comma-separated list of tool names to expose to the agent. If not provided, all available tools are exposed. | No       |
-| `--api-base-url` | `REMOTE_API_BASE_URL`  | The base URL for the Remote API. Defaults to the production URL.                                               | No       |
+| Argument         | Environment Variable   | Description                                                                                                                                                                                                   | Required |
+| ---------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `--api-key`      | `REMOTE_API_KEY`       | Your Remote API key.                                                                                                                                                                                          | Yes      |
+| `--tools`        | `REMOTE_ALLOWED_TOOLS` | A comma-separated list of tool names to expose to the agent. If not provided, all available tools are exposed. See the main [README](https://github.com/remoteoss/ai-agent-toolkit) for a full list of names. | No       |
+| `--api-base-url` | `REMOTE_API_BASE_URL`  | The base URL for the Remote API. Defaults to the production URL.                                                                                                                                              | No       |
 
 ## Usage with Claude Desktop
 
