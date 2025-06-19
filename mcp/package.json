@@ -1,6 +1,6 @@
 {
   "name": "@remoteoss/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "description": "A CLI to run the Remote AI Agent Toolkit MCP server.",
   "license": "MIT",
