@@ -14,9 +14,7 @@
   "homepage": "https://github.com/remoteoss/ai-agent-toolkit/mcp",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "remote-mcp": "dist/index.js"
-  },
+  "bin": "dist/index.js",
   "files": [
     "dist",
     "README.md"
