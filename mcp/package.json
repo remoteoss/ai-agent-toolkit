@@ -24,13 +24,32 @@
   ],
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "lint": "eslint \"./**/*.ts*\"",
+    "prettier": "prettier './**/*.{js,ts,md}' --write",
+    "prettier-check": "prettier './**/*.{js,ts,md}' --check",
+    "test": "jest"
   },
   "dependencies": {
     "@remoteoss/ai-agent-toolkit": "0.1.0",
     "colors": "^1.4.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.29.0",
+    "@jest/globals": "^30.0.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.0.1",
+    "eslint-plugin-prettier": "^5.5.0",
+    "jest": "^30.0.2",
+    "prettier": "^3.6.0",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.0.0"
   }
