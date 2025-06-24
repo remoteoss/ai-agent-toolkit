@@ -106,16 +106,21 @@ export interface ApiClient {
 
 export class RemoteApiClient implements ApiClient {
   private apiKey: string;
-  private baseUrl: string = 'https://gateway.remote.com/v1'; // Default base URL
+  private baseUrl: string;
 
   constructor(apiKey: string, baseUrl?: string) {
     if (!apiKey) {
       throw new Error('API key is required for RemoteApiClient');
     }
     this.apiKey = apiKey;
-    if (baseUrl) {
-      this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl || this.determineBaseUrlFromApiKey(apiKey);
+  }
+
+  private determineBaseUrlFromApiKey(apiKey: string): string {
+    if (apiKey.startsWith('ra_test_')) {
+      return 'https://gateway.remote-sandbox.com/v1';
     }
+    return 'https://gateway.remote.com/v1';
   }
 
   private async request<T>(
