@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ListExpensesParams,
-  ListExpensesResponse,
-} from '../client/expense.types';
+import type { ListExpensesParams, ListExpensesResponse } from '../client/expense.types';
 import type { ApiClient } from '../client/api.client';
 
 export const listExpensesPrompt: string = `
@@ -15,16 +12,11 @@ The amount is in cents, take that into account when returning the result, {"amou
 
 export const listExpensesParameters = (_context?: Context) =>
   z.object({
-    page: z
-      .number()
-      .optional()
-      .describe('Starts fetching records after the given page.'),
+    page: z.number().optional().describe('Starts fetching records after the given page.'),
     page_size: z
       .number()
       .optional()
-      .describe(
-        'Change the amount of records returned per page, defaults to 20, limited to 100.',
-      ),
+      .describe('Change the amount of records returned per page, defaults to 20, limited to 100.'),
   });
 
 export const listExpenses = async (

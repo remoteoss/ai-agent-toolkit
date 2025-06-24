@@ -17,9 +17,7 @@ async function main() {
   });
 
   const tools = remoteApiToolkit.getTools();
-  const prompt = await pull<ChatPromptTemplate>(
-    'hwchase17/structured-chat-agent',
-  );
+  const prompt = await pull<ChatPromptTemplate>('hwchase17/structured-chat-agent');
 
   const agent = await createStructuredChatAgent({
     llm,

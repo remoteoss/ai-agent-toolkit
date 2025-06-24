@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ShowEmploymentParams,
-  ShowEmploymentResponse,
-} from '../client/employments.types';
+import type { ShowEmploymentParams, ShowEmploymentResponse } from '../client/employments.types';
 import type { ApiClient } from '../client/api.client';
 
 export const showEmploymentPrompt: string = `
@@ -32,9 +29,7 @@ export const showEmployment = async (
   params: { [x: string]: any },
 ): Promise<ShowEmploymentResponse | string> => {
   try {
-    const employmentData = await apiClient.showEmployment(
-      params as ShowEmploymentParams,
-    );
+    const employmentData = await apiClient.showEmployment(params as ShowEmploymentParams);
     return employmentData;
   } catch (error) {
     console.error('Failed to show employment:', error);

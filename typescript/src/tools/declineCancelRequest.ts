@@ -10,9 +10,7 @@ This tool declines a cancellation request for a Time Off by its ID in the Remote
 
 export const declineCancelRequestParameters = (_context?: Context) =>
   z.object({
-    id: z
-      .string()
-      .describe('The ID of the time off to decline cancellation for.'),
+    id: z.string().describe('The ID of the time off to decline cancellation for.'),
   });
 
 export const declineCancelRequest = async (

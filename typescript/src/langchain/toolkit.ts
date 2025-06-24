@@ -24,7 +24,7 @@ export class RemoteApiAgentToolkit extends BaseToolkit {
     this._context = { apiKey, allowedTools };
 
     this.tools = getAllTools(this._context).map(
-      toolDefinition =>
+      (toolDefinition) =>
         new RemoteApiTool({
           apiClient: this._apiClient,
           toolDefinition,

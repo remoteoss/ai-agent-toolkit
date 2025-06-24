@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ListTimeOffParams,
-  ListTimeOffResponse,
-} from '../client/timeoff.types';
+import type { ListTimeOffParams, ListTimeOffResponse } from '../client/timeoff.types';
 import type { ApiClient } from '../client/api.client';
 
 export const listTimeOffPrompt: string = `
@@ -33,27 +30,14 @@ export const listTimeOffParameters = (
     timeoff_type: z
       .string()
       .optional()
-      .describe(
-        'Filter time off by its type (e.g., sick_leave, paid_time_off).',
-      ),
+      .describe('Filter time off by its type (e.g., sick_leave, paid_time_off).'),
     status: z
       .string()
       .optional()
       .describe('Filter time off by its status (e.g., approved, requested).'),
-    order: z
-      .enum(['asc', 'desc'])
-      .optional()
-      .describe('Sort order: asc or desc.'),
-    sort_by: z
-      .string()
-      .optional()
-      .describe('Field to sort by (e.g., timeoff_type, start_date).'),
-    page: z
-      .number()
-      .int()
-      .positive()
-      .optional()
-      .describe('Page number for pagination (>= 1).'),
+    order: z.enum(['asc', 'desc']).optional().describe('Sort order: asc or desc.'),
+    sort_by: z.string().optional().describe('Field to sort by (e.g., timeoff_type, start_date).'),
+    page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z
       .number()
       .int()
@@ -69,9 +53,7 @@ export const listTimeOff = async (
   params: z.infer<ReturnType<typeof listTimeOffParameters>>,
 ): Promise<ListTimeOffResponse | string> => {
   try {
-    const timeOffData = await apiClient.listTimeOff(
-      params as ListTimeOffParams,
-    );
+    const timeOffData = await apiClient.listTimeOff(params as ListTimeOffParams);
     return timeOffData;
   } catch (error) {
     console.error('Failed to list time off:', error);

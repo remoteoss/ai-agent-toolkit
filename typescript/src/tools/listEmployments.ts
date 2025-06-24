@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ListEmploymentsParams,
-  ListEmploymentsResponse,
-} from '../client/employments.types';
+import type { ListEmploymentsParams, ListEmploymentsResponse } from '../client/employments.types';
 import { employmentStatus, employmentType } from '../client/employments.types';
 import type { ApiClient } from '../client/api.client';
 
@@ -27,20 +24,12 @@ export const listEmploymentsParameters = (
   z.object({
     company_id: z.string().optional().describe('Company ID to filter by.'),
     email: z.string().optional().describe('Email to filter by.'),
-    status: z
-      .nativeEnum(employmentStatus)
-      .optional()
-      .describe('Status to filter by.'),
+    status: z.nativeEnum(employmentStatus).optional().describe('Status to filter by.'),
     employment_type: z
       .nativeEnum(employmentType)
       .optional()
       .describe('Employment type to filter by.'),
-    page: z
-      .number()
-      .int()
-      .positive()
-      .optional()
-      .describe('Page number for pagination (>= 1).'),
+    page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z
       .number()
       .int()
@@ -56,9 +45,7 @@ export const listEmployments = async (
   params: z.infer<ReturnType<typeof listEmploymentsParameters>>,
 ): Promise<ListEmploymentsResponse | string> => {
   try {
-    const employmentsData = await apiClient.listEmployments(
-      params as ListEmploymentsParams,
-    );
+    const employmentsData = await apiClient.listEmployments(params as ListEmploymentsParams);
     return employmentsData;
   } catch (error) {
     console.error('Failed to list employments:', error);

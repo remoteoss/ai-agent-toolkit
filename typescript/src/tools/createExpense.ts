@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  CreateExpenseParams,
-  CreateExpenseResponse,
-} from '../client/expense.types';
+import type { CreateExpenseParams, CreateExpenseResponse } from '../client/expense.types';
 import { ExpenseCategory } from '../client/expense.types';
 import type { ApiClient } from '../client/api.client';
 
@@ -20,37 +17,23 @@ const receiptSchema = z.object({
 
 export const createExpenseParameters = (_context?: Context) =>
   z.object({
-    expense_date: z
-      .string()
-      .describe('Date of the purchase, must be in the past (YYYY-MM-DD).'),
+    expense_date: z.string().describe('Date of the purchase, must be in the past (YYYY-MM-DD).'),
     title: z.string().describe('Title of the expense.'),
     amount: z
       .number()
-      .describe(
-        'Amount of the expense in the specified currency. The amount is in cents.',
-      ),
-    currency: z
-      .string()
-      .describe('Three-letter code for the expense currency (e.g., USD, EUR).'),
-    category: z
-      .nativeEnum(ExpenseCategory)
-      .describe('Category of the expense.'),
-    employment_id: z
-      .string()
-      .describe('The uuid of the employment to which this expense relates.'),
+      .describe('Amount of the expense in the specified currency. The amount is in cents.'),
+    currency: z.string().describe('Three-letter code for the expense currency (e.g., USD, EUR).'),
+    category: z.nativeEnum(ExpenseCategory).describe('Category of the expense.'),
+    employment_id: z.string().describe('The uuid of the employment to which this expense relates.'),
     tax_amount: z.number().optional().describe('Tax amount for the expense.'),
     receipt: receiptSchema
       .optional()
-      .describe(
-        'A single receipt file (base64 encoded). Cannot be used with receipts.',
-      ),
+      .describe('A single receipt file (base64 encoded). Cannot be used with receipts.'),
     receipts: z
       .array(receiptSchema)
       .max(5)
       .optional()
-      .describe(
-        'An array of up to 5 receipt files (base64 encoded). Cannot be used with receipt.',
-      ),
+      .describe('An array of up to 5 receipt files (base64 encoded). Cannot be used with receipt.'),
     reviewed_at: z
       .string()
       .optional()

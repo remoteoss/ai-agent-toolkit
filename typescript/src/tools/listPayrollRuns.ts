@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ListPayrollRunsParams,
-  ListPayrollRunsResponse,
-} from '../client/payroll.types';
+import type { ListPayrollRunsParams, ListPayrollRunsResponse } from '../client/payroll.types';
 import type { ApiClient } from '../client/api.client';
 
 export const listPayrollRunsPrompt: string = `
@@ -24,12 +21,7 @@ export const listPayrollRunsParameters = (
       .string()
       .optional()
       .describe('The payroll period to fetch. Must be in YYYY-MM-DD format.'),
-    page: z
-      .number()
-      .int()
-      .positive()
-      .optional()
-      .describe('Page number for pagination (>= 1).'),
+    page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z
       .number()
       .int()
@@ -45,9 +37,7 @@ export const listPayrollRuns = async (
   params: z.infer<ReturnType<typeof listPayrollRunsParameters>>,
 ): Promise<ListPayrollRunsResponse | string> => {
   try {
-    const payrollRunsData = await apiClient.listPayrollRuns(
-      params as ListPayrollRunsParams,
-    );
+    const payrollRunsData = await apiClient.listPayrollRuns(params as ListPayrollRunsParams);
     return payrollRunsData;
   } catch (error) {
     console.error('Failed to list payroll runs:', error);

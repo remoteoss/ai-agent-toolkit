@@ -15,12 +15,7 @@ You can optionally filter by company_id, and supports pagination.
 export const listCompanyManagersParameters = (_context?: Context) =>
   z.object({
     company_id: z.string().optional().describe('Filter by company ID.'),
-    page: z
-      .number()
-      .int()
-      .positive()
-      .optional()
-      .describe('Page number for pagination (>= 1).'),
+    page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z
       .number()
       .int()
@@ -36,9 +31,7 @@ export const listCompanyManagers = async (
   params: z.infer<ReturnType<typeof listCompanyManagersParameters>>,
 ): Promise<ListCompanyManagersResponse | string> => {
   try {
-    const managersResp = await apiClient.listCompanyManagers(
-      params as ListCompanyManagersParams,
-    );
+    const managersResp = await apiClient.listCompanyManagers(params as ListCompanyManagersParams);
     return managersResp;
   } catch (error) {
     console.error('Failed to list company managers:', error);

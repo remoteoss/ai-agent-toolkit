@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ListIncentivesParams,
-  ListIncentivesResponse,
-} from '../client/incentives.types';
+import type { ListIncentivesParams, ListIncentivesResponse } from '../client/incentives.types';
 import type { ApiClient } from '../client/api.client';
 
 export const listIncentivesPrompt: string = `
@@ -29,14 +26,8 @@ export const listIncentivesParameters = (
 }> =>
   z.object({
     amount: z.number().optional().describe('Filter incentives by amount.'),
-    amount_tax_type: z
-      .string()
-      .optional()
-      .describe('Filter incentives by their amount tax type.'),
-    effective_date: z
-      .string()
-      .optional()
-      .describe('Filter incentives by their effective date.'),
+    amount_tax_type: z.string().optional().describe('Filter incentives by their amount tax type.'),
+    effective_date: z.string().optional().describe('Filter incentives by their effective date.'),
     expected_payout_date: z
       .string()
       .optional()
@@ -46,10 +37,7 @@ export const listIncentivesParameters = (
       .string()
       .optional()
       .describe('Filter incentives by their recurring incentive ID.'),
-    status: z
-      .string()
-      .optional()
-      .describe('Filter incentives by their status.'),
+    status: z.string().optional().describe('Filter incentives by their status.'),
     type: z.string().optional().describe('Filter incentives by their type.'),
     employment_id: z
       .string()
@@ -57,12 +45,7 @@ export const listIncentivesParameters = (
       .describe(
         'Filter incentives for a specific employment ID. Must be a valid employment ID from the list_employments tool.',
       ),
-    page: z
-      .number()
-      .int()
-      .positive()
-      .optional()
-      .describe('Page number for pagination (>= 1).'),
+    page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z
       .number()
       .int()
@@ -78,9 +61,7 @@ export const listIncentives = async (
   params: z.infer<ReturnType<typeof listIncentivesParameters>>,
 ): Promise<ListIncentivesResponse | string> => {
   try {
-    const incentivesData = await apiClient.listIncentives(
-      params as ListIncentivesParams,
-    );
+    const incentivesData = await apiClient.listIncentives(params as ListIncentivesParams);
     return incentivesData;
   } catch (error) {
     console.error('Failed to list incentives:', error);

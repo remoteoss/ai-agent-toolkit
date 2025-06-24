@@ -8,10 +8,7 @@ import type {
   ShowEmploymentParams,
   ShowEmploymentResponse,
 } from './employments.types';
-import type {
-  ListIncentivesParams,
-  ListIncentivesResponse,
-} from './incentives.types';
+import type { ListIncentivesParams, ListIncentivesResponse } from './incentives.types';
 import type {
   ListPayrollRunsParams,
   ListPayrollRunsResponse,
@@ -53,48 +50,29 @@ import type {
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
-  listEmployments(
-    params: ListEmploymentsParams,
-  ): Promise<ListEmploymentsResponse>;
+  listEmployments(params: ListEmploymentsParams): Promise<ListEmploymentsResponse>;
   listIncentives(params: ListIncentivesParams): Promise<ListIncentivesResponse>;
   showEmployment(params: ShowEmploymentParams): Promise<ShowEmploymentResponse>;
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
   createTimeOff(params: TimeOffParams): Promise<CreateTimeOffResponse>;
   updateTimeOff(params: TimeOffParams): Promise<UpdateTimeOffResponse>;
   getTimeOff(id: string): Promise<GetTimeOffResponse>;
-  approveTimeOff(
-    id: string,
-    approver_id: string,
-  ): Promise<TimeOffActionResponse>;
-  cancelTimeOff(
-    id: string,
-    cancel_reason?: string,
-  ): Promise<TimeOffActionResponse>;
+  approveTimeOff(id: string, approver_id: string): Promise<TimeOffActionResponse>;
+  cancelTimeOff(id: string, cancel_reason?: string): Promise<TimeOffActionResponse>;
   declineTimeOff(params: DeclineTimeOffParams): Promise<TimeOffActionResponse>;
   approveCancelRequest(id: string): Promise<TimeOffActionResponse>;
   declineCancelRequest(id: string): Promise<TimeOffActionResponse>;
   listTimeOffTypes(): Promise<ListTimeOffTypesResponse>;
-  getLeavePoliciesSummary(
-    employment_id: string,
-  ): Promise<ListLeavePoliciesSummaryResponse>;
-  getLeavePoliciesDetails(
-    employment_id: string,
-  ): Promise<ListLeavePoliciesDetailsResponse>;
-  listCompanyManagers(
-    params: ListCompanyManagersParams,
-  ): Promise<ListCompanyManagersResponse>;
-  listPayrollRuns(
-    params: ListPayrollRunsParams,
-  ): Promise<ListPayrollRunsResponse>;
+  getLeavePoliciesSummary(employment_id: string): Promise<ListLeavePoliciesSummaryResponse>;
+  getLeavePoliciesDetails(employment_id: string): Promise<ListLeavePoliciesDetailsResponse>;
+  listCompanyManagers(params: ListCompanyManagersParams): Promise<ListCompanyManagersResponse>;
+  listPayrollRuns(params: ListPayrollRunsParams): Promise<ListPayrollRunsResponse>;
   showPayrollRun(params: ShowPayrollRunParams): Promise<ShowPayrollRunResponse>;
   listPayslips(params: ListPayslipsParams): Promise<ListPayslipsResponse>;
   listExpenses(params: ListExpensesParams): Promise<ListExpensesResponse>;
   createExpense(params: CreateExpenseParams): Promise<CreateExpenseResponse>;
   getExpense(id: string): Promise<GetExpenseResponse>;
-  updateExpense(
-    id: string,
-    params: UpdateExpenseParams,
-  ): Promise<UpdateExpenseResponse>;
+  updateExpense(id: string, params: UpdateExpenseParams): Promise<UpdateExpenseResponse>;
   listTimesheets(params: ListTimesheetsParams): Promise<ListTimesheetsResponse>;
   getTimesheet(id: string): Promise<GetTimesheetResponse>;
   approveTimesheet(id: string): Promise<ApproveTimesheetResponse>;
@@ -170,16 +148,11 @@ export class RemoteApiClient implements ApiClient {
 
       return response.json() as Promise<T>;
     } catch (error) {
-      console.error(
-        `API Request Failed for ${method} ${url.toString()}:`,
-        error,
-      );
+      console.error(`API Request Failed for ${method} ${url.toString()}:`, error);
       if (error instanceof Error) {
         throw error;
       }
-      throw new Error(
-        `A non-Error object was thrown from API request: ${String(error)}`,
-      );
+      throw new Error(`A non-Error object was thrown from API request: ${String(error)}`);
     }
   }
 
@@ -192,95 +165,56 @@ export class RemoteApiClient implements ApiClient {
   }
 
   async createTimeOff(params: TimeOffParams): Promise<CreateTimeOffResponse> {
-    return this.request<CreateTimeOffResponse>(
-      '/timeoff',
-      'POST',
-      undefined,
-      params,
-    );
+    return this.request<CreateTimeOffResponse>('/timeoff', 'POST', undefined, params);
   }
 
   async updateTimeOff(params: TimeOffParams): Promise<UpdateTimeOffResponse> {
     const { id, ...updateFields } = params;
-    return this.request<UpdateTimeOffResponse>(
-      `/timeoff/${id}`,
-      'PATCH',
-      undefined,
-      updateFields,
-    );
+    return this.request<UpdateTimeOffResponse>(`/timeoff/${id}`, 'PATCH', undefined, updateFields);
   }
 
   async getTimeOff(id: string): Promise<GetTimeOffResponse> {
     return this.request<GetTimeOffResponse>(`/timeoff/${id}`, 'GET');
   }
 
-  async approveTimeOff(
-    id: string,
-    approver_id: string,
-  ): Promise<TimeOffActionResponse> {
-    return this.request<TimeOffActionResponse>(
-      `/timeoff/${id}/approve`,
-      'POST',
-      undefined,
-      { approver_id },
-    );
+  async approveTimeOff(id: string, approver_id: string): Promise<TimeOffActionResponse> {
+    return this.request<TimeOffActionResponse>(`/timeoff/${id}/approve`, 'POST', undefined, {
+      approver_id,
+    });
   }
 
-  async cancelTimeOff(
-    id: string,
-    cancel_reason: string,
-  ): Promise<TimeOffActionResponse> {
+  async cancelTimeOff(id: string, cancel_reason: string): Promise<TimeOffActionResponse> {
     const body = { cancel_reason };
-    return this.request<TimeOffActionResponse>(
-      `/timeoff/${id}/cancel`,
-      'POST',
-      undefined,
-      body,
-    );
+    return this.request<TimeOffActionResponse>(`/timeoff/${id}/cancel`, 'POST', undefined, body);
   }
 
-  async declineTimeOff(
-    params: DeclineTimeOffParams,
-  ): Promise<TimeOffActionResponse> {
+  async declineTimeOff(params: DeclineTimeOffParams): Promise<TimeOffActionResponse> {
     const { id, decline_reason } = params;
-    return this.request<TimeOffActionResponse>(
-      `/timeoff/${id}/decline`,
-      'POST',
-      undefined,
-      { decline_reason },
-    );
+    return this.request<TimeOffActionResponse>(`/timeoff/${id}/decline`, 'POST', undefined, {
+      decline_reason,
+    });
   }
 
   async approveCancelRequest(id: string): Promise<TimeOffActionResponse> {
-    return this.request<TimeOffActionResponse>(
-      `/timeoff/${id}/cancel-request/approve`,
-      'POST',
-    );
+    return this.request<TimeOffActionResponse>(`/timeoff/${id}/cancel-request/approve`, 'POST');
   }
 
   async declineCancelRequest(id: string): Promise<TimeOffActionResponse> {
-    return this.request<TimeOffActionResponse>(
-      `/timeoff/${id}/cancel-request/decline`,
-      'POST',
-    );
+    return this.request<TimeOffActionResponse>(`/timeoff/${id}/cancel-request/decline`, 'POST');
   }
 
   async listTimeOffTypes(): Promise<ListTimeOffTypesResponse> {
     return this.request<ListTimeOffTypesResponse>(`/timeoff/types`, 'GET');
   }
 
-  async getLeavePoliciesSummary(
-    employment_id: string,
-  ): Promise<ListLeavePoliciesSummaryResponse> {
+  async getLeavePoliciesSummary(employment_id: string): Promise<ListLeavePoliciesSummaryResponse> {
     return this.request<ListLeavePoliciesSummaryResponse>(
       `/leave-policies/summary/${employment_id}`,
       'GET',
     );
   }
 
-  async getLeavePoliciesDetails(
-    employment_id: string,
-  ): Promise<ListLeavePoliciesDetailsResponse> {
+  async getLeavePoliciesDetails(employment_id: string): Promise<ListLeavePoliciesDetailsResponse> {
     return this.request<ListLeavePoliciesDetailsResponse>(
       `/leave-policies/details/${employment_id}`,
       'GET',
@@ -297,9 +231,7 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async listEmployments(
-    params: ListEmploymentsParams,
-  ): Promise<ListEmploymentsResponse> {
+  async listEmployments(params: ListEmploymentsParams): Promise<ListEmploymentsResponse> {
     return this.request<ListEmploymentsResponse>(
       '/employments',
       'GET',
@@ -307,19 +239,12 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async showEmployment(
-    params: ShowEmploymentParams,
-  ): Promise<ShowEmploymentResponse> {
+  async showEmployment(params: ShowEmploymentParams): Promise<ShowEmploymentResponse> {
     const { employment_id } = params;
-    return this.request<ShowEmploymentResponse>(
-      `/employments/${employment_id}`,
-      'GET',
-    );
+    return this.request<ShowEmploymentResponse>(`/employments/${employment_id}`, 'GET');
   }
 
-  async listPayrollRuns(
-    params: ListPayrollRunsParams,
-  ): Promise<ListPayrollRunsResponse> {
+  async listPayrollRuns(params: ListPayrollRunsParams): Promise<ListPayrollRunsResponse> {
     return this.request<ListPayrollRunsResponse>(
       '/payroll-runs',
       'GET',
@@ -327,19 +252,12 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async showPayrollRun(
-    params: ShowPayrollRunParams,
-  ): Promise<ShowPayrollRunResponse> {
+  async showPayrollRun(params: ShowPayrollRunParams): Promise<ShowPayrollRunResponse> {
     const { payroll_run_id } = params;
-    return this.request<ShowPayrollRunResponse>(
-      `/payroll-runs/${payroll_run_id}`,
-      'GET',
-    );
+    return this.request<ShowPayrollRunResponse>(`/payroll-runs/${payroll_run_id}`, 'GET');
   }
 
-  async listPayslips(
-    params: ListPayslipsParams,
-  ): Promise<ListPayslipsResponse> {
+  async listPayslips(params: ListPayslipsParams): Promise<ListPayslipsResponse> {
     return this.request<ListPayslipsResponse>(
       '/payslips',
       'GET',
@@ -347,9 +265,7 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async listExpenses(
-    params: ListExpensesParams,
-  ): Promise<ListExpensesResponse> {
+  async listExpenses(params: ListExpensesParams): Promise<ListExpensesResponse> {
     return this.request<ListExpensesResponse>(
       '/expenses',
       'GET',
@@ -357,36 +273,19 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async createExpense(
-    params: CreateExpenseParams,
-  ): Promise<CreateExpenseResponse> {
-    return this.request<CreateExpenseResponse>(
-      '/expenses',
-      'POST',
-      undefined,
-      params,
-    );
+  async createExpense(params: CreateExpenseParams): Promise<CreateExpenseResponse> {
+    return this.request<CreateExpenseResponse>('/expenses', 'POST', undefined, params);
   }
 
   async getExpense(id: string): Promise<GetExpenseResponse> {
     return this.request<GetExpenseResponse>(`/expenses/${id}`, 'GET');
   }
 
-  async updateExpense(
-    id: string,
-    params: UpdateExpenseParams,
-  ): Promise<UpdateExpenseResponse> {
-    return this.request<UpdateExpenseResponse>(
-      `/expenses/${id}`,
-      'PATCH',
-      undefined,
-      params,
-    );
+  async updateExpense(id: string, params: UpdateExpenseParams): Promise<UpdateExpenseResponse> {
+    return this.request<UpdateExpenseResponse>(`/expenses/${id}`, 'PATCH', undefined, params);
   }
 
-  async listTimesheets(
-    params: ListTimesheetsParams,
-  ): Promise<ListTimesheetsResponse> {
+  async listTimesheets(params: ListTimesheetsParams): Promise<ListTimesheetsResponse> {
     return this.request<ListTimesheetsResponse>(
       '/timesheets',
       'GET',
@@ -399,10 +298,7 @@ export class RemoteApiClient implements ApiClient {
   }
 
   async approveTimesheet(id: string): Promise<ApproveTimesheetResponse> {
-    return this.request<ApproveTimesheetResponse>(
-      `/timesheets/${id}/approve`,
-      'POST',
-    );
+    return this.request<ApproveTimesheetResponse>(`/timesheets/${id}/approve`, 'POST');
   }
 
   async sendBackTimesheet(
@@ -417,9 +313,7 @@ export class RemoteApiClient implements ApiClient {
     );
   }
 
-  async listIncentives(
-    params: ListIncentivesParams,
-  ): Promise<ListIncentivesResponse> {
+  async listIncentives(params: ListIncentivesParams): Promise<ListIncentivesResponse> {
     return this.request<ListIncentivesResponse>(
       '/incentives',
       'GET',

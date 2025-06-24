@@ -20,12 +20,7 @@ export class RemoteApiTool extends StructuredTool {
   description: string;
   schema: z.ZodObject<any, any, any, any>;
 
-  constructor({
-    apiClient,
-    toolDefinition,
-    context,
-    ...rest
-  }: RemoteApiToolParams) {
+  constructor({ apiClient, toolDefinition, context, ...rest }: RemoteApiToolParams) {
     super(rest);
     this.apiClient = apiClient;
     this.toolDefinition = toolDefinition;
@@ -42,11 +37,7 @@ export class RemoteApiTool extends StructuredTool {
     _config?: any,
   ): Promise<string> {
     try {
-      const result = await this.toolDefinition.execute(
-        this.apiClient,
-        this.context,
-        arg,
-      );
+      const result = await this.toolDefinition.execute(this.apiClient, this.context, arg);
       if (typeof result === 'string') {
         return result;
       }
