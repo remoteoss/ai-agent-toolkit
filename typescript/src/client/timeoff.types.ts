@@ -152,13 +152,9 @@ export interface EmployeeLeavePolicy {
 
 export interface LeavePolicySummary {
   annual_balance: LimitedDaysandHoursResponse | UnlimitedDaysandHoursResponse;
-  annual_entitlement:
-    | LimitedDaysandHoursResponse
-    | UnlimitedDaysandHoursResponse;
+  annual_entitlement: LimitedDaysandHoursResponse | UnlimitedDaysandHoursResponse;
   balance: LimitedDaysandHoursResponse | UnlimitedDaysandHoursResponse;
-  current_entitlement:
-    | LimitedDaysandHoursResponse
-    | UnlimitedDaysandHoursResponse;
+  current_entitlement: LimitedDaysandHoursResponse | UnlimitedDaysandHoursResponse;
   leave_policy: EmployeeLeavePolicy;
   pending_approval: LimitedDaysandHoursResponse;
   taken: LimitedDaysandHoursResponse;

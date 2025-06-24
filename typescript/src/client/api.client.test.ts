@@ -10,9 +10,7 @@ describe('RemoteApiClient', () => {
 
   describe('constructor', () => {
     it('should throw an error if no API key is provided', () => {
-      expect(() => new RemoteApiClient('')).toThrow(
-        'API key is required for RemoteApiClient',
-      );
+      expect(() => new RemoteApiClient('')).toThrow('API key is required for RemoteApiClient');
       expect(() => new RemoteApiClient(null as any)).toThrow(
         'API key is required for RemoteApiClient',
       );
@@ -33,9 +31,7 @@ describe('RemoteApiClient', () => {
       const testApiKey = 'ra_test_12345abcdef';
       const client = new RemoteApiClient(testApiKey);
 
-      expect((client as any).baseUrl).toBe(
-        'https://gateway.remote-sandbox.com/v1',
-      );
+      expect((client as any).baseUrl).toBe('https://gateway.remote-sandbox.com/v1');
     });
 
     it('should auto-detect production URL for production API keys', () => {
@@ -66,15 +62,9 @@ describe('RemoteApiClient', () => {
       const client = new RemoteApiClient('dummy_key');
       const method = (client as any).determineBaseUrlFromApiKey.bind(client);
 
-      expect(method('ra_test_12345')).toBe(
-        'https://gateway.remote-sandbox.com/v1',
-      );
-      expect(method('ra_test_abcdef')).toBe(
-        'https://gateway.remote-sandbox.com/v1',
-      );
-      expect(method('ra_test_xyz123')).toBe(
-        'https://gateway.remote-sandbox.com/v1',
-      );
+      expect(method('ra_test_12345')).toBe('https://gateway.remote-sandbox.com/v1');
+      expect(method('ra_test_abcdef')).toBe('https://gateway.remote-sandbox.com/v1');
+      expect(method('ra_test_xyz123')).toBe('https://gateway.remote-sandbox.com/v1');
     });
 
     it('should return production URL for non-test API keys', () => {
@@ -94,9 +84,7 @@ describe('RemoteApiClient', () => {
       // Keys that contain 'ra_test' but don't start with 'ra_test_'
       expect(method('ra_testother')).toBe('https://gateway.remote.com/v1');
       expect(method('ra_test')).toBe('https://gateway.remote.com/v1'); // Missing underscore
-      expect(method('prefix_ra_test_suffix')).toBe(
-        'https://gateway.remote.com/v1',
-      );
+      expect(method('prefix_ra_test_suffix')).toBe('https://gateway.remote.com/v1');
     });
   });
 

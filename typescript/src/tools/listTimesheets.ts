@@ -15,18 +15,10 @@ It can be filtered by status and supports pagination and sorting.
 
 export const listTimesheetsParameters = (_context?: Context) =>
   z.object({
-    status: z
-      .nativeEnum(TimesheetStatus)
-      .optional()
-      .describe('Filter timesheets by their status'),
+    status: z.nativeEnum(TimesheetStatus).optional().describe('Filter timesheets by their status'),
     order: z.enum(['asc', 'desc']).optional().describe('Sort order'),
     sort_by: z.enum(['submitted_at']).optional().describe('Field to sort by'),
-    page: z
-      .number()
-      .int()
-      .positive()
-      .optional()
-      .describe('Page number for pagination (>= 1).'),
+    page: z.number().int().positive().optional().describe('Page number for pagination (>= 1).'),
     page_size: z
       .number()
       .int()
@@ -42,9 +34,7 @@ export const listTimesheets = async (
   params: z.infer<ReturnType<typeof listTimesheetsParameters>>,
 ): Promise<ListTimesheetsResponse | string> => {
   try {
-    const timesheetsData = await apiClient.listTimesheets(
-      params as ListTimesheetsParams,
-    );
+    const timesheetsData = await apiClient.listTimesheets(params as ListTimesheetsParams);
     return timesheetsData;
   } catch (error) {
     console.error('Failed to list timesheets:', error);

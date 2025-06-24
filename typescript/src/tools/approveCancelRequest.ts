@@ -10,9 +10,7 @@ This tool approves a cancellation request for a Time Off by its ID in the Remote
 
 export const approveCancelRequestParameters = (_context?: Context) =>
   z.object({
-    id: z
-      .string()
-      .describe('The ID of the time off to approve cancellation for.'),
+    id: z.string().describe('The ID of the time off to approve cancellation for.'),
   });
 
 export const approveCancelRequest = async (

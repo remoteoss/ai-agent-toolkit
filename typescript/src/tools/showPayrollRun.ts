@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ShowPayrollRunParams,
-  ShowPayrollRunResponse,
-} from '../client/payroll.types';
+import type { ShowPayrollRunParams, ShowPayrollRunResponse } from '../client/payroll.types';
 import type { ApiClient } from '../client/api.client';
 
 export const showPayrollRunPrompt: string = `
@@ -26,9 +23,7 @@ export const showPayrollRun = async (
   params: { [x: string]: any },
 ): Promise<ShowPayrollRunResponse | string> => {
   try {
-    const payrollRun = await apiClient.showPayrollRun(
-      params as ShowPayrollRunParams,
-    );
+    const payrollRun = await apiClient.showPayrollRun(params as ShowPayrollRunParams);
     return payrollRun;
   } catch (error) {
     console.error('Failed to fetch payroll run:', error);

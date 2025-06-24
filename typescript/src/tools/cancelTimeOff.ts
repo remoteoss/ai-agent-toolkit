@@ -12,12 +12,8 @@ export const cancelTimeOffParameters = (_context?: Context) =>
   z.object({
     id: z
       .string()
-      .describe(
-        'The UUID of the time off to cancel. Use list_time_off to get the UUID.',
-      ),
-    cancel_reason: z
-      .string()
-      .describe('The reason for cancelling the time off.'),
+      .describe('The UUID of the time off to cancel. Use list_time_off to get the UUID.'),
+    cancel_reason: z.string().describe('The reason for cancelling the time off.'),
   });
 
 export const cancelTimeOff = async (
@@ -26,10 +22,7 @@ export const cancelTimeOff = async (
   params: any,
 ): Promise<TimeOffActionResponse | string> => {
   try {
-    const result = await apiClient.cancelTimeOff(
-      params.id,
-      params.cancel_reason,
-    );
+    const result = await apiClient.cancelTimeOff(params.id, params.cancel_reason);
     return result;
   } catch (error) {
     console.error('Failed to cancel time off:', error);

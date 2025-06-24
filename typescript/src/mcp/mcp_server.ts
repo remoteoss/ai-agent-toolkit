@@ -43,7 +43,7 @@ export class RemoteApiMcpServer extends McpServer {
   private registerTools(): void {
     const tools = getAllTools(this.internalContext);
 
-    tools.forEach(localTool => {
+    tools.forEach((localTool) => {
       this.tool(
         localTool.method,
         localTool.description,
@@ -53,28 +53,18 @@ export class RemoteApiMcpServer extends McpServer {
           _extra: RequestHandlerExtra<any, any>,
         ) => {
           try {
-            const result = await localTool.execute(
-              this.apiClient,
-              this.internalContext,
-              params,
-            );
+            const result = await localTool.execute(this.apiClient, this.internalContext, params);
 
             return {
               content: [
                 {
                   type: 'text' as const,
-                  text:
-                    typeof result === 'string'
-                      ? result
-                      : JSON.stringify(result, null, 2),
+                  text: typeof result === 'string' ? result : JSON.stringify(result, null, 2),
                 },
               ],
             };
           } catch (error) {
-            console.error(
-              `MCP Server: Error executing ${localTool.method}:`,
-              error,
-            );
+            console.error(`MCP Server: Error executing ${localTool.method}:`, error);
             return {
               content: [
                 {

@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  TimeOffParams,
-  UpdateTimeOffResponse,
-} from '../client/timeoff.types';
+import type { TimeOffParams, UpdateTimeOffResponse } from '../client/timeoff.types';
 import type { ApiClient } from '../client/api.client';
 
 export const updateTimeOffPrompt: string = `
@@ -38,13 +35,8 @@ export const updateTimeOffParameters = (_context?: Context) =>
     document: z.any().optional().describe('Optional document.'),
     approver_id: z
       .string()
-      .describe(
-        "The approver's user ID. If not provided, use the first company manager from the.",
-      ),
-    approved_at: z
-      .string()
-      .optional()
-      .describe('The approval datetime (ISO8601).'),
+      .describe("The approver's user ID. If not provided, use the first company manager from the."),
+    approved_at: z.string().optional().describe('The approval datetime (ISO8601).'),
   });
 
 export const updateTimeOff = async (

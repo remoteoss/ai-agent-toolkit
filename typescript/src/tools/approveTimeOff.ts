@@ -28,10 +28,7 @@ export const approveTimeOff = async (
   params: any,
 ): Promise<TimeOffActionResponse | string> => {
   try {
-    const result = await apiClient.approveTimeOff(
-      params.id,
-      params.approver_id,
-    );
+    const result = await apiClient.approveTimeOff(params.id, params.approver_id);
     return result;
   } catch (error) {
     console.error('Failed to approve time off:', error);

@@ -10,10 +10,7 @@ type IncompleteEmploymentStatus =
   | 'job_title_review';
 type OffboardedEmploymentStatus = 'archived' | 'deleted';
 
-export type EmploymentStatus =
-  | 'active'
-  | IncompleteEmploymentStatus
-  | OffboardedEmploymentStatus;
+export type EmploymentStatus = 'active' | IncompleteEmploymentStatus | OffboardedEmploymentStatus;
 
 export const employmentStatus: Record<string, EmploymentStatus> = {
   ACTIVE: 'active',

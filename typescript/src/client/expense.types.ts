@@ -123,9 +123,7 @@ export interface GetExpenseResponse {
   };
 }
 
-export type UpdateExpenseParams =
-  | { status: 'approved' }
-  | { status: 'declined'; reason: string };
+export type UpdateExpenseParams = { status: 'approved' } | { status: 'declined'; reason: string };
 
 export interface UpdateExpenseResponse {
   data: {

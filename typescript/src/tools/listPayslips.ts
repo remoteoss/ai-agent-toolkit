@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  ListPayslipsParams,
-  ListPayslipsResponse,
-} from '../client/payroll.types';
+import type { ListPayslipsParams, ListPayslipsResponse } from '../client/payroll.types';
 import type { ApiClient } from '../client/api.client';
 
 export const listPayslipsPrompt: string = `
@@ -47,9 +44,7 @@ export const listPayslipsParameters = (_context?: Context) =>
     page_size: z
       .number()
       .optional()
-      .describe(
-        'The number of items per page for pagination (defaults to 20, max 100).',
-      ),
+      .describe('The number of items per page for pagination (defaults to 20, max 100).'),
   });
 
 export const listPayslips = async (
@@ -59,9 +54,7 @@ export const listPayslips = async (
 ): Promise<ListPayslipsResponse | string> => {
   try {
     const parsedParams = listPayslipsParameters().parse(params);
-    const result = await apiClient.listPayslips(
-      parsedParams as ListPayslipsParams,
-    );
+    const result = await apiClient.listPayslips(parsedParams as ListPayslipsParams);
     return result;
   } catch (error) {
     console.error('Failed to list payslips:', error);

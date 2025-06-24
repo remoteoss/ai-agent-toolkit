@@ -9,7 +9,7 @@ interface CliOptions {
   allowedTools?: string[];
 }
 
-function parseArgs(args: string[]): CliOptions {
+export function parseArgs(args: string[]): CliOptions {
   const options: CliOptions = {};
   for (const arg of args) {
     if (arg.startsWith('--api-key=')) {
@@ -50,7 +50,7 @@ function handleError(error: any, messagePrefix: string = 'Error'): void {
   process.exit(1);
 }
 
-async function main() {
+export async function main() {
   try {
     const options = parseArgs(process.argv.slice(2));
 
@@ -71,12 +71,9 @@ async function main() {
 
 if (
   require.main === module ||
-  (process.env.NODE_ENV === 'test' &&
-    require.main?.filename?.endsWith('cli.ts'))
+  (process.env.NODE_ENV === 'test' && require.main?.filename?.endsWith('cli.ts'))
 ) {
-  main().catch(error => {
+  main().catch((error) => {
     handleError(error, 'Fatal error in MCP server CLI');
   });
 }
-
-export { main as runMcpServerCli };

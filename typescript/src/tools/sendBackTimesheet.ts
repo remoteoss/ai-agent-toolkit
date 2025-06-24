@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import type { Context } from '../shared/configuration';
 import type { Tool, ToolFactory } from '../shared/tools';
-import type {
-  SendBackTimesheetParams,
-  SentBackTimesheetResponse,
-} from '../client/timesheet.types';
+import type { SendBackTimesheetParams, SentBackTimesheetResponse } from '../client/timesheet.types';
 import type { ApiClient } from '../client/api.client';
 
 export const sendBackTimesheetPrompt: string = `
@@ -14,9 +11,7 @@ This tool sends a Timesheet back to the employee for review or modification by i
 export const sendBackTimesheetParameters = (_context?: Context) =>
   z.object({
     id: z.string().describe('The ID of the timesheet to send back.'),
-    sent_back_reason: z
-      .string()
-      .describe('The reason for sending the timesheet back.'),
+    sent_back_reason: z.string().describe('The reason for sending the timesheet back.'),
   });
 
 export const sendBackTimesheet = async (
