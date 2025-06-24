@@ -28,7 +28,9 @@
     "lint": "eslint \"./**/*.ts*\"",
     "prettier": "prettier './**/*.{js,ts,md}' --write",
     "prettier-check": "prettier './**/*.{js,ts,md}' --check",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@remoteoss/ai-agent-toolkit": "0.1.0",
