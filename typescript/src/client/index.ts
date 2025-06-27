@@ -5,3 +5,4 @@ export * from './employments.types';
 export * from './payroll.types';
 export * from './expense.types';
 export * from './timesheet.types';
+export * from './billing.types';
