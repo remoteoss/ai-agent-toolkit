@@ -1,6 +1,6 @@
 {
   "name": "@remoteoss/ai-agent-toolkit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Toolkit for integrating the Remote API into agentic workflows",
   "author": "Remote.com <engineering@remote.com> (https://remote.com/)",
   "license": "MIT",
