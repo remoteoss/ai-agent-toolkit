@@ -47,6 +47,7 @@ import type {
   SendBackTimesheetParams,
   SentBackTimesheetResponse,
 } from './timesheet.types';
+import type { ListBillingDocumentsParams, ListBillingDocumentsResponse } from './billing.types';
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
@@ -80,6 +81,7 @@ export interface ApiClient {
     id: string,
     params: SendBackTimesheetParams,
   ): Promise<SentBackTimesheetResponse>;
+  listBillingDocuments(params: ListBillingDocumentsParams): Promise<ListBillingDocumentsResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -316,6 +318,16 @@ export class RemoteApiClient implements ApiClient {
   async listIncentives(params: ListIncentivesParams): Promise<ListIncentivesResponse> {
     return this.request<ListIncentivesResponse>(
       '/incentives',
+      'GET',
+      params as Record<string, string | number | boolean | undefined>,
+    );
+  }
+
+  async listBillingDocuments(
+    params: ListBillingDocumentsParams,
+  ): Promise<ListBillingDocumentsResponse> {
+    return this.request<ListBillingDocumentsResponse>(
+      '/billing-documents',
       'GET',
       params as Record<string, string | number | boolean | undefined>,
     );

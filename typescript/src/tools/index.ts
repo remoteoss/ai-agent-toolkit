@@ -26,6 +26,7 @@ import getTimesheetToolFactory from './getTimesheet';
 import approveTimesheetToolFactory from './approveTimesheet';
 import sendBackTimesheetToolFactory from './sendBackTimesheet';
 import listPayslipsToolFactory from './listPayslips';
+import listBillingDocumentsToolFactory from './billing/listBillingDocuments';
 
 export const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
@@ -45,18 +46,16 @@ export const toolFactories: ToolFactory[] = [
   showPayrollRunToolFactory,
   leaveBalanceToolFactory,
   leavePoliciesDetailsToolFactory,
-  // Expense tools
   listExpensesToolFactory,
   createExpenseToolFactory,
   getExpenseToolFactory,
   updateExpenseToolFactory,
-  // Add other tool factories here as they are created
-  // e.g., createTimeOffToolFactory,
   listTimesheetsToolFactory,
   getTimesheetToolFactory,
   approveTimesheetToolFactory,
   sendBackTimesheetToolFactory,
   listPayslipsToolFactory,
+  listBillingDocumentsToolFactory,
 ];
 
 const getAllTools: ToolListFactory = (context: Context) => {
