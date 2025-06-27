@@ -51,3 +51,26 @@ export interface BillingDocument {
 export interface ShowBillingDocumentResponse {
   billing_document: BillingDocument;
 }
+
+export interface BillingDocumentBreakdown {
+  country_code: string;
+  description: string;
+  employment_id: string;
+  fx_rate: string;
+  invoice_amount: number;
+  invoice_currency: string | null; // Currency code in ISO 4217 format.
+  invoice_number: string;
+  invoice_period: string;
+  source_amount: number;
+  source_currency: string | null;
+  type: string;
+  variance_from_invoice: number | null;
+}
+
+export interface GetBillingDocumentBreakdownParams {
+  type: string;
+}
+
+export interface GetBillingDocumentBreakdownResponse {
+  billing_document_breakdown: BillingDocumentBreakdown[];
+}

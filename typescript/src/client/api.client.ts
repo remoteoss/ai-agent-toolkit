@@ -52,6 +52,8 @@ import type {
   ListBillingDocumentsResponse,
   ShowBillingDocumentParams,
   ShowBillingDocumentResponse,
+  GetBillingDocumentBreakdownParams,
+  GetBillingDocumentBreakdownResponse,
 } from './billing.types';
 
 export interface ApiClient {
@@ -88,6 +90,10 @@ export interface ApiClient {
   ): Promise<SentBackTimesheetResponse>;
   listBillingDocuments(params: ListBillingDocumentsParams): Promise<ListBillingDocumentsResponse>;
   showBillingDocument(params: ShowBillingDocumentParams): Promise<ShowBillingDocumentResponse>;
+  getBillingDocumentBreakdown(
+    billing_document_id: string,
+    params: GetBillingDocumentBreakdownParams,
+  ): Promise<GetBillingDocumentBreakdownResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -345,6 +351,15 @@ export class RemoteApiClient implements ApiClient {
     const { billing_document_id } = params;
     return this.request<ShowBillingDocumentResponse>(
       `/billing-documents/${billing_document_id}`,
+      'GET',
+    );
+  }
+  async getBillingDocumentBreakdown(
+    billing_document_id: string,
+    params: GetBillingDocumentBreakdownParams,
+  ): Promise<GetBillingDocumentBreakdownResponse> {
+    return this.request<GetBillingDocumentBreakdownResponse>(
+      `/billing-documents/${billing_document_id}/breakdown`,
       'GET',
     );
   }
