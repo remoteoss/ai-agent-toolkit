@@ -1,6 +1,6 @@
 {
   "name": "@remoteoss/mcp",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "description": "A CLI to run the Remote AI Agent Toolkit MCP server.",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@remoteoss/ai-agent-toolkit": "0.1.0",
+    "@remoteoss/ai-agent-toolkit": "0.1.4",
     "colors": "^1.4.0"
   },
   "devDependencies": {
