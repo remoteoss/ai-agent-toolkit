@@ -69,12 +69,12 @@ const getAllTools: ToolListFactory = (context: Context) => {
     return allTools;
   }
 
-  const filteredTools = allTools.filter((tool) => context.allowedTools!.includes(tool.name));
+  const filteredTools = allTools.filter((tool) => context.allowedTools!.includes(tool.method));
 
   if (filteredTools.length === 0) {
     console.warn(
       'No tools matched the allowedTools filter. Available tools:',
-      allTools.map((t) => t.name).join(', '),
+      allTools.map((t) => t.method).join(', '),
     );
   }
 
