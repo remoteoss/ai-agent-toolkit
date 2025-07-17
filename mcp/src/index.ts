@@ -69,11 +69,6 @@ export async function main() {
   }
 }
 
-if (
-  require.main === module ||
-  (process.env.NODE_ENV === 'test' && require.main?.filename?.endsWith('cli.ts'))
-) {
-  main().catch((error) => {
-    handleError(error, 'Fatal error in MCP server CLI');
-  });
-}
+main().catch((error) => {
+  handleError(error, 'Fatal error in MCP server CLI');
+});
