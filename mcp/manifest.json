@@ -1,0 +1,181 @@
+{
+  "dxt_version": "0.1",
+  "name": "remote-mcp",
+  "display_name": "Remote MCP",
+  "version": "0.1.5",
+  "description": "Integrate Remote.com's HR and payroll systems with Claude.",
+  "long_description": "The Remote MCP Server enables Claude to interact with Remote.com's API for HR operations including employee management, time-off requests, expense tracking, payroll operations, and company management. Perfect for HR automation and employee self-service workflows.",
+  "author": {
+    "name": "Remote.com",
+    "email": "engineering@remote.com",
+    "url": "https://remote.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remoteoss/ai-agent-toolkit.git"
+  },
+  "icon": "icon.png",
+  "homepage": "https://github.com/remoteoss/ai-agent-toolkit",
+  "license": "MIT",
+  "keywords": ["hr", "payroll", "remote", "mcp", "ai-agent"],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": {
+        "REMOTE_API_KEY": "${user_config.api_key}",
+        "REMOTE_API_BASE_URL": "${user_config.api_base_url}",
+        "REMOTE_ALLOWED_TOOLS": "${user_config.allowed_tools}"
+      }
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  },
+  "user_config": {
+    "api_key": {
+      "type": "string",
+      "title": "API Key",
+      "description": "Your API key for authentication",
+      "sensitive": true,
+      "required": true
+    },
+    "api_base_url": {
+      "type": "string",
+      "title": "API Base URL",
+      "description": "Your API base URL (optional, auto-detected based on the API key if not provided)",
+      "sensitive": false,
+      "required": false,
+      "default": ""
+    },
+    "allowed_tools": {
+      "type": "string",
+      "title": "Allowed Tools",
+      "description": "Comma-separated list of allowed tools (optional, allows all if not specified)",
+      "required": false,
+      "default": ""
+    }
+  },
+  "tools": [
+    {
+      "name": "list_time_off",
+      "description": "Lists time off records with filtering and pagination. Can be used to find pending requests that need approval."
+    },
+    {
+      "name": "create_time_off",
+      "description": "Creates a PRE-APPROVED time off record. Requires employment ID, dates, and time off type."
+    },
+    {
+      "name": "get_time_off",
+      "description": "Retrieves details of a specific time off record by ID."
+    },
+    {
+      "name": "update_time_off",
+      "description": "Updates an existing time off record with new information."
+    },
+    {
+      "name": "approve_time_off",
+      "description": "Approves a pending time off request."
+    },
+    {
+      "name": "decline_time_off",
+      "description": "Declines a pending time off request with optional reason."
+    },
+    {
+      "name": "cancel_time_off",
+      "description": "Cancels an approved time off request."
+    },
+    {
+      "name": "approve_cancel_request",
+      "description": "Approves a cancellation request for time off."
+    },
+    {
+      "name": "decline_cancel_request",
+      "description": "Declines a cancellation request for time off."
+    },
+    {
+      "name": "list_time_off_types",
+      "description": "Lists all available time off types (sick leave, vacation, etc.)."
+    },
+    {
+      "name": "leave_balance",
+      "description": "Gets the leave balance for an employee showing available days."
+    },
+    {
+      "name": "leave_policies_details",
+      "description": "Retrieves leave policy details and rules."
+    },
+    {
+      "name": "list_employments",
+      "description": "Lists employment records with filtering options."
+    },
+    {
+      "name": "show_employment",
+      "description": "Shows detailed information about a specific employment."
+    },
+    {
+      "name": "list_company_managers",
+      "description": "Lists all company managers who can approve requests."
+    },
+    {
+      "name": "list_expenses",
+      "description": "Lists expense records that may need approval or review."
+    },
+    {
+      "name": "create_expense",
+      "description": "Creates a new expense record for reimbursement."
+    },
+    {
+      "name": "get_expense",
+      "description": "Retrieves details of a specific expense record."
+    },
+    {
+      "name": "update_expense",
+      "description": "Updates an existing expense record."
+    },
+    {
+      "name": "list_timesheets",
+      "description": "Lists timesheet records with filtering and pagination."
+    },
+    {
+      "name": "get_timesheet",
+      "description": "Retrieves details of a specific timesheet."
+    },
+    {
+      "name": "approve_timesheet",
+      "description": "Approves a submitted timesheet."
+    },
+    {
+      "name": "send_back_timesheet",
+      "description": "Sends a timesheet back for revision."
+    },
+    {
+      "name": "list_payroll_runs",
+      "description": "Lists payroll runs with filtering options."
+    },
+    {
+      "name": "show_payroll_run",
+      "description": "Shows detailed information about a specific payroll run."
+    },
+    {
+      "name": "list_payslips",
+      "description": "Lists payslips for employees."
+    },
+    {
+      "name": "list_billing_documents",
+      "description": "Lists billing documents and invoices."
+    },
+    {
+      "name": "show_billing_document",
+      "description": "Shows details of a specific billing document."
+    },
+    {
+      "name": "get_billing_document_breakdown",
+      "description": "Gets detailed breakdown of billing document charges."
+    }
+  ]
+}
