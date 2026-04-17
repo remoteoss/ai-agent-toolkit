@@ -29,6 +29,8 @@ import listPayslipsToolFactory from './listPayslips';
 import listBillingDocumentsToolFactory from './billing/listBillingDocuments';
 import showBillingDocumentToolFactory from './billing/showBillingDocument';
 import getBillingDocumentBreakdownToolFactory from './billing/getBillingDocumentBreakdown';
+import listContractorInvoicesToolFactory from './contractorInvoices/listContractorInvoices';
+import getContractorInvoiceToolFactory from './contractorInvoices/getContractorInvoice';
 
 export const toolFactories: ToolFactory[] = [
   listTimeOffToolFactory,
@@ -60,6 +62,8 @@ export const toolFactories: ToolFactory[] = [
   listBillingDocumentsToolFactory,
   showBillingDocumentToolFactory,
   getBillingDocumentBreakdownToolFactory,
+  listContractorInvoicesToolFactory,
+  getContractorInvoiceToolFactory,
 ];
 
 const getAllTools: ToolListFactory = (context: Context) => {
