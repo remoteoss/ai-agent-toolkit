@@ -1,6 +1,6 @@
 {
   "name": "@remoteoss/ai-agent-toolkit",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Toolkit for integrating the Remote API into agentic workflows",
   "author": "Remote.com <engineering@remote.com> (https://remote.com/)",
   "license": "MIT",
@@ -65,6 +65,6 @@
   },
   "peerDependencies": {
     "@langchain/core": "^0.3.56",
-    "@modelcontextprotocol/sdk": "^1.11.4"
+    "@modelcontextprotocol/sdk": "^1.29.0"
   }
 }
