@@ -22,13 +22,6 @@ export class RemoteApiMcpServer extends McpServer {
     super({
       name: 'RemoteApiToolkit',
       version: PACKAGE_VERSION,
-      configuration: {
-        context: {
-          mode: 'modelcontextprotocol',
-          apiKeyProvided: !!apiKey,
-          allowedTools: allowedTools || undefined,
-        },
-      },
     });
 
     if (!apiKey) {

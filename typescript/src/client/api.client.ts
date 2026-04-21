@@ -55,6 +55,11 @@ import type {
   GetBillingDocumentBreakdownParams,
   GetBillingDocumentBreakdownResponse,
 } from './billing.types';
+import type {
+  ListContractorInvoicesParams,
+  ListContractorInvoicesResponse,
+  GetContractorInvoiceResponse,
+} from './contractorInvoice.types';
 
 export interface ApiClient {
   listTimeOff(params: ListTimeOffParams): Promise<ListTimeOffResponse>;
@@ -94,6 +99,10 @@ export interface ApiClient {
     billing_document_id: string,
     params: GetBillingDocumentBreakdownParams,
   ): Promise<GetBillingDocumentBreakdownResponse>;
+  listContractorInvoices(
+    params: ListContractorInvoicesParams,
+  ): Promise<ListContractorInvoicesResponse>;
+  getContractorInvoice(id: string): Promise<GetContractorInvoiceResponse>;
 }
 
 export class RemoteApiClient implements ApiClient {
@@ -362,5 +371,19 @@ export class RemoteApiClient implements ApiClient {
       `/billing-documents/${billing_document_id}/breakdown`,
       'GET',
     );
+  }
+
+  async listContractorInvoices(
+    params: ListContractorInvoicesParams,
+  ): Promise<ListContractorInvoicesResponse> {
+    return this.request<ListContractorInvoicesResponse>(
+      '/contractor-invoices',
+      'GET',
+      params as Record<string, string | number | boolean | undefined>,
+    );
+  }
+
+  async getContractorInvoice(id: string): Promise<GetContractorInvoiceResponse> {
+    return this.request<GetContractorInvoiceResponse>(`/contractor-invoices/${id}`, 'GET');
   }
 }

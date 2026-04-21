@@ -2,7 +2,7 @@
   "dxt_version": "0.1",
   "name": "remote-mcp",
   "display_name": "Remote MCP",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Integrate Remote.com's HR and payroll systems with Claude.",
   "long_description": "The Remote MCP Server enables Claude to interact with Remote.com's API for HR operations including employee management, time-off requests, expense tracking, payroll operations, and company management. Perfect for HR automation and employee self-service workflows.",
   "author": {
@@ -176,6 +176,14 @@
     {
       "name": "get_billing_document_breakdown",
       "description": "Gets detailed breakdown of billing document charges."
+    },
+    {
+      "name": "list_contractor_invoices",
+      "description": "Lists contractor invoices with filtering by status, date ranges, and pagination."
+    },
+    {
+      "name": "get_contractor_invoice",
+      "description": "Retrieves details of a specific contractor invoice by ID."
     }
   ]
 }
