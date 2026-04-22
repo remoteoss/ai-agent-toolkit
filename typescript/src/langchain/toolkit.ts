@@ -21,7 +21,7 @@ export class RemoteApiAgentToolkit extends BaseToolkit {
       throw new Error('API key is required for RemoteApiAgentToolkit');
     }
     this._apiClient = new RemoteApiClient(apiKey, apiBaseUrl);
-    this._context = { apiKey, allowedTools };
+    this._context = { allowedTools };
 
     this.tools = getAllTools(this._context).map(
       (toolDefinition) =>
