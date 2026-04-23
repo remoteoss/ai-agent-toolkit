@@ -103,10 +103,12 @@ The toolkit provides a set of tools to interact with the Remote API. The followi
 | Create Time Off             | Create a new time off request (pre-approved)          | `create_time_off`             |
 | Decline Cancel Request      | Decline a request to cancel time off                  | `decline_cancel_request`      |
 | Decline Time Off            | Decline a pending time off request                    | `decline_time_off`            |
+| Get Contractor Invoice      | Retrieve details of a specific contractor invoice     | `get_contractor_invoice`      |
 | Get Expense                 | Retrieve details of a specific expense                | `get_expense`                 |
 | Get Time Off                | Retrieve details of a specific time off request       | `get_time_off`                |
 | Get Timesheet               | Retrieve details of a specific timesheet              | `get_timesheet`               |
 | List Company Managers       | List all company managers                             | `list_company_managers`       |
+| List Contractor Invoices    | List contractor invoices with filtering options       | `list_contractor_invoices`    |
 | List Employments            | List employment records with filtering options        | `list_employments`            |
 | List Expenses               | List expense records with filtering and pagination    | `list_expenses`               |
 | List Incentives             | List incentive records                                | `list_incentives`             |

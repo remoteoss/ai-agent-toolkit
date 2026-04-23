@@ -28,7 +28,7 @@ export class RemoteApiMcpServer extends McpServer {
       throw new Error('API key is required for RemoteApiMcpServer');
     }
     this.apiClient = new RemoteApiClient(apiKey, apiBaseUrl);
-    this.internalContext = { apiKey, allowedTools };
+    this.internalContext = { allowedTools };
 
     this.registerTools();
   }
