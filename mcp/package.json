@@ -33,7 +33,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@remoteoss/ai-agent-toolkit": "0.1.5",
+    "@remoteoss/ai-agent-toolkit": "0.1.6",
     "colors": "^1.4.0"
   },
   "devDependencies": {
