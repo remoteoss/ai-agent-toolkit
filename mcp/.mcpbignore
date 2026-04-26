@@ -1,0 +1,7 @@
+src/
+eslint.config.mjs
+jest.config.js
+coverage/
+*.test.js
+.env
+.env.*
