@@ -1,0 +1,49 @@
+name: Release MCPB
+
+on:
+  push:
+    tags:
+      - 'mcp-v*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies (including dev for build)
+        working-directory: mcp
+        run: npm ci
+
+      - name: Build
+        working-directory: mcp
+        run: npm run build
+
+      - name: Remove dev dependencies before packing
+        working-directory: mcp
+        run: npm prune --omit=dev
+
+      - name: Get version
+        id: version
+        working-directory: mcp
+        run: echo "version=$(node -p 'require("./manifest.json").version')" >> $GITHUB_OUTPUT
+
+      - name: Pack MCPB
+        working-directory: mcp
+        run: npx --yes @anthropic-ai/mcpb pack . remote-mcp-${{ steps.version.outputs.version }}.mcpb
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ github.ref_name }} \
+            mcp/remote-mcp-${{ steps.version.outputs.version }}.mcpb \
+            --title "${{ github.ref_name }}" \
+            --generate-notes
